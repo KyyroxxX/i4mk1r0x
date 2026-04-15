@@ -1429,15 +1429,15 @@
         <form class="contact-form" onsubmit="handleSubmit(event)">
           <div class="form-group">
             <label class="form-label">Nombre</label>
-            <input type="text" class="form-input" placeholder="Tu nombre" required>
+            <input type="text" name="name" class="form-input" placeholder="Tu nombre" required>
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <input type="email" class="form-input" placeholder="tu@email.com" required>
+            <input type="email" name="email" class="form-input" placeholder="tu@email.com" required>
           </div>
           <div class="form-group">
             <label class="form-label">Mensaje</label>
-            <textarea class="form-textarea" placeholder="Cuéntame tu propuesta..." required></textarea>
+            <textarea name="message" class="form-textarea" placeholder="Cuéntame tu propuesta..." required></textarea>
           </div>
           <button type="submit" class="btn btn-primary"
             style="cursor:none; border:none; width:100%; justify-content:center;">
@@ -1688,12 +1688,41 @@ PHP[8.2], Cookies[PHPSESSID]`,
     window.nextTrack = () => alert("Siguiente canción pronto...");
 
     // ── Form ──
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('button span');
-      btn.textContent = '✓ Enviado — Gracias';
-      e.target.reset();
-      setTimeout(() => btn.textContent = '▸ Enviar mensaje', 3000);
+      const form = e.target;
+      const btn = form.querySelector('button span');
+      const originalText = btn.textContent;
+
+      // Indica que se está enviando
+      btn.textContent = '⌛ Enviando...';
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      try {
+        const response = await fetch('https://formspree.io/f/PON_AQUI_TU_ID', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          btn.textContent = '✓ Enviado — Gracias';
+          form.reset();
+        } else {
+          const errorData = await response.json();
+          btn.textContent = '✕ Error: ' + (errorData.error || 'Inténtalo de nuevo');
+        }
+      } catch (error) {
+        btn.textContent = '✕ Error de red';
+        console.error('Form submission error:', error);
+      }
+
+      setTimeout(() => btn.textContent = originalText, 5000);
     }
   </script>
 </body>
