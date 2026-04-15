@@ -1067,6 +1067,63 @@
         text-align: center;
       }
     }
+    /* ── Scroll Indicator ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .scroll-indicator:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    .mouse {
+      width: 20px;
+      height: 32px;
+      border: 2px solid var(--text-dim);
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .wheel {
+      width: 3px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scroll-wheel 2s infinite;
+    }
+
+    @keyframes scroll-wheel {
+      0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(12px);
+      }
+    }
+
   </style>
 </head>
 
@@ -1159,6 +1216,14 @@
         <!-- filled by JS -->
       </div>
     </div>
+
+    <!-- Scroll Indicator -->
+    <a href="#about" class="scroll-indicator fade-in">
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+      <span>SCROLL</span>
+    </a>
   </section>
 
   <!-- About -->
@@ -1427,7 +1492,7 @@
       },
       {
         type: 'prompt',
-        cmd: 'nmap -sC -sV -T4 target.com',
+        cmd: 'nmap -sC -sV -T4 breakerxfixer.online',
         out: `PORT     STATE SERVICE VERSION
 22/tcp   open  ssh     OpenSSH 9.3
 80/tcp   open  http    nginx 1.24.0
@@ -1437,7 +1502,7 @@ Service Info: OS: Linux`,
       },
       {
         type: 'prompt',
-        cmd: 'gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/common.txt',
+        cmd: 'gobuster dir -u https://breakerxfixer.online/ -w /usr/share/wordlists/dirb/common.txt',
         out: `/admin               (Status: 301)
 /login               (Status: 200)
 /dashboard           (Status: 302)
@@ -1446,14 +1511,14 @@ Service Info: OS: Linux`,
       },
       {
         type: 'prompt',
-        cmd: 'whatweb target.com',
+        cmd: 'whatweb breakerxfixer.online',
         out: `HTTPServer[nginx], IP[192.168.1.10], Title[Login Panel],
 PHP[8.2], Cookies[PHPSESSID]`,
         outClass: 'ok'
       },
       {
         type: 'prompt',
-        cmd: 'wpscan --url http://target.com --enumerate u',
+        cmd: 'wpscan --url https://breakerxfixer.online/ --enumerate u',
         out: `[+] Found 2 users:
  - admin
  - testuser`,
@@ -1461,7 +1526,7 @@ PHP[8.2], Cookies[PHPSESSID]`,
       },
       {
         type: 'prompt',
-        cmd: 'sqlmap -u "http://target.com/login?id=1" --batch --dbs',
+        cmd: 'sqlmap -u "https://breakerxfixer.online/login?id=1" --batch --dbs',
         out: `[INFO] available databases:
 [*] users
 [*] information_schema`,
