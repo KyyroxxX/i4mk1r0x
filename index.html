@@ -1225,7 +1225,7 @@
     }
 
     /* ── Responsive ── */
-    @media (max-width: 1400px) {
+    @media (max-width: 1200px) {
       .widget-clock {
         left: 2%;
         scale: 0.8;
@@ -1273,25 +1273,73 @@
         min-height: auto;
         padding-bottom: 5rem;
       }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
-    @media (max-width: 700px) {
-      nav {
-        padding: 0.3rem 0.8rem;
+    @media (max-width: 768px) {
+      section {
+        padding: 4rem 1.2rem;
       }
 
-      .bar-center {
+      .bar-center, .bar-right {
         display: none;
       }
 
-      .section-title {
-        font-size: 2rem;
+      nav {
+        padding: 0.3rem 1rem;
       }
 
-      footer {
+      .hero-name {
+        font-size: clamp(2.5rem, 12vw, 4.5rem);
+      }
+
+      .skills-grid, .certs-grid, .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cert-card.featured {
+        grid-column: span 1;
+      }
+
+      .cert-card {
         flex-direction: column;
-        gap: 1rem;
+        align-items: center;
         text-align: center;
+        padding: 1.5rem;
+        gap: 1.5rem;
+      }
+
+      .terminal {
+        width: 100%;
+        margin-top: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-img {
+        height: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
       }
     }
     /* ── Scroll Indicator ── */
@@ -1683,7 +1731,13 @@
               <div class="writeup-meta">HTB · THM · OSCP Style Labs · CVE Analysis</div>
             </div>
           </div>
-          <div class="writeup-btn">🌐</div>
+          <div class="writeup-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </div>
         </a>
       </div>
     </div>
