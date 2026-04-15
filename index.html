@@ -1493,6 +1493,7 @@
       {
         type: 'prompt',
         cmd: 'nmap -sC -sV -T4 breakerxfixer.online',
+        clear: true,
         out: `PORT     STATE SERVICE VERSION
 22/tcp   open  ssh     OpenSSH 9.3
 80/tcp   open  http    nginx 1.24.0
@@ -1527,6 +1528,7 @@ PHP[8.2], Cookies[PHPSESSID]`,
       {
         type: 'prompt',
         cmd: 'sqlmap -u "https://breakerxfixer.online/login?id=1" --batch --dbs',
+        clear: true,
         out: `[INFO] available databases:
 [*] users
 [*] information_schema`,
@@ -1548,6 +1550,11 @@ PHP[8.2], Cookies[PHPSESSID]`,
     function nextLine() {
       if (li >= lines.length) return;
       const line = lines[li];
+
+      if (line.clear) {
+        tbody.innerHTML = '';
+      }
+
       currentLine = document.createElement('div');
       currentLine.className = 't-line';
       promptEl = document.createElement('span');
