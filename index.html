@@ -43,6 +43,25 @@
       scroll-behavior: smooth;
     }
 
+    /* ── Custom Scrollbar ── */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-crust);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--surface);
+      border-radius: 5px;
+      border: 2px solid var(--bg-crust);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-mauve);
+    }
+
     body {
       background: var(--bg);
       color: var(--text);
@@ -82,7 +101,7 @@
       transition: transform 0.15s ease-out;
     }
 
-    /* ── Aesthetic Wallpaper (Mauve/Pink Mesh) ── */
+    /* ── Aesthetic Wallpaper (Mauve/Pink Mesh) & Cyber Grid ── */
     body::before {
       content: '';
       position: fixed;
@@ -95,7 +114,23 @@
         radial-gradient(at 0% 100%, rgba(203, 166, 247, 0.2) 0px, transparent 50%),
         linear-gradient(135deg, #181825 0%, #1e1e2e 100%);
       pointer-events: none;
+      z-index: -2;
+    }
+
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(203, 166, 247, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(203, 166, 247, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
       z-index: -1;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at center, black, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
     }
 
     /* ── Enhanced Polybar (Nav) ── */
@@ -799,6 +834,94 @@
       margin-bottom: 0.4rem;
     }
 
+    /* ── Projects ── */
+    #projects {
+      background: var(--bg);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: rgba(49, 50, 68, 0.3);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px -5px rgba(203, 166, 247, 0.2);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      background-image: url('assets/breakerfixer_preview.png');
+    }
+
+    .project-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(30, 30, 46, 0.9));
+    }
+
+    .project-info {
+      padding: 1.8rem;
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .project-title span {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      background: rgba(203, 166, 247, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+
+    .project-link:hover {
+      gap: 0.8rem;
+    }
+
     .cert-issuer {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
@@ -1133,6 +1256,9 @@
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
 
+  <!-- Cyber Grid -->
+  <div class="cyber-grid"></div>
+
   <!-- Nav -->
   <nav>
     <div class="bar-left">
@@ -1371,6 +1497,17 @@
         </div>
       </div>
       <div class="cert-card fade-in">
+        <div class="cert-badge">📟</div>
+        <div class="cert-info">
+          <div class="cert-name">SMR — Sistemas Microinformáticos y Redes</div>
+          <div class="cert-issuer">Grado Medio · Completado</div>
+          <div class="cert-desc">
+            Formación técnica base en hardware, montaje de equipos, redes locales, 
+            administración de sistemas operativos y servicios microinformáticos.
+          </div>
+        </div>
+      </div>
+      <div class="cert-card fade-in">
         <div class="cert-badge">🎓</div>
         <div class="cert-info">
           <div class="cert-name">ASIR — Administración de Sistemas Informáticos en Red</div>
@@ -1390,6 +1527,32 @@
             Participación activa en plataformas de práctica y competiciones
             de ciberseguridad a nivel global.
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">Proyectos Destacados</h2>
+    <div class="section-divider"></div>
+
+    <div class="projects-grid">
+      <div class="project-card fade-in">
+        <div class="project-img"></div>
+        <div class="project-info">
+          <div class="project-title">
+            BreakerFixer <span>Live</span>
+          </div>
+          <p class="project-desc">
+            Plataforma dedicada al aprendizaje de ciberseguridad ofensiva. 
+            Incluye guías detalladas, retos prácticos y una comunidad 
+            enfocada en el crecimiento mutuo en el sector.
+          </p>
+          <a href="https://breakerxfixer.online" target="_blank" class="project-link">
+            Visitar sitio oficial ▸
+          </a>
         </div>
       </div>
     </div>
@@ -1578,10 +1741,10 @@ PHP[8.2], Cookies[PHPSESSID]`,
       if (phase === 'cmd') {
         if (ci < line.cmd.length) {
           cmdEl.textContent += line.cmd[ci++];
-          setTimeout(typeChar, 60 + Math.random() * 40);
+          setTimeout(typeChar, 40 + Math.random() * 30);
         } else {
           document.getElementById('tcursor')?.remove();
-          setTimeout(() => { phase = 'out'; showOut(); }, 500 + Math.random() * 300);
+          setTimeout(() => { phase = 'out'; showOut(); }, 300 + Math.random() * 200);
         }
       }
     }
