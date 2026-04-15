@@ -922,6 +922,101 @@
       gap: 0.8rem;
     }
 
+    /* ── Writeups ── */
+    #writeups {
+      background: var(--bg-alt);
+    }
+
+    .writeup-intro {
+      max-width: 600px;
+      color: var(--text-dim);
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    .writeups-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .writeup-item {
+      background: rgba(30, 30, 46, 0.4);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .writeup-item:hover {
+      border-color: var(--accent);
+      background: rgba(49, 50, 68, 0.3);
+      transform: translateX(12px);
+      box-shadow: -5px 0 15px rgba(203, 166, 247, 0.1);
+    }
+
+    .writeup-item-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .writeup-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: rgba(203, 166, 247, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      border: 1px solid rgba(203, 166, 247, 0.2);
+    }
+
+    .writeup-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .writeup-meta {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+
+    .writeup-btn {
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .writeup-item:hover .writeup-btn {
+      color: var(--accent);
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+      .writeup-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+        gap: 1.5rem;
+      }
+      .writeup-item-left {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .writeup-btn {
+        display: none;
+      }
+    }
+
     .cert-issuer {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
@@ -1554,6 +1649,33 @@
             Visitar sitio oficial ▸
           </a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Writeups -->
+  <section id="writeups">
+    <div class="section-label">Writeups</div>
+    <h2 class="section-title">Análisis de Intrusión</h2>
+    <div class="section-divider"></div>
+
+    <div class="writeups-container fade-in">
+      <p class="writeup-intro">
+        Documentación técnica detallada sobre la resolución de máquinas, 
+        análisis de exploits y técnicas modernas de pentesting.
+      </p>
+
+      <div class="writeups-list">
+        <a href="https://breakerxfixer.online/writeups.html" target="_blank" class="writeup-item">
+          <div class="writeup-item-left">
+            <div class="writeup-date">2024 - 2025</div>
+            <div class="writeup-info">
+              <div class="writeup-name">Writeups Oficiales: BreakerFixer</div>
+              <div class="writeup-meta">HTB · THM · OSCP Style Labs · CVE Analysis</div>
+            </div>
+          </div>
+          <div class="writeup-btn">󰖟</div>
+        </a>
       </div>
     </div>
   </section>
