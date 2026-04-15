@@ -1413,9 +1413,66 @@
 
     // ── Terminal Typewriter ──
     const lines = [
-      { type: 'prompt', cmd: 'neofetch', out: '       %           kyrox@mauvebox\n      % %          ------------\n     %   %         OS: Arch Linux (Mauve Edition)\n    %     %        Kernel: 6.8.5-zen\n   %       %       WM: bspwm + zombi3\n  %%%%%%%%%%%      Theme: Catppuccin Pink', outClass: 'ok' },
-      { type: 'prompt', cmd: 'whoami', out: 'kyrox (security researcher)', outClass: 'ok' },
-      { type: 'prompt', cmd: 'cat /etc/version', out: 'v2.0.0-mauve-rainbow', outClass: 'ok' },
+      {
+        type: 'prompt',
+        cmd: 'whoami',
+        out: 'kyrox (offensive security / pentesting)',
+        outClass: 'ok'
+      },
+      {
+        type: 'prompt',
+        cmd: 'uname -a',
+        out: 'Linux archbox 6.8.5-zen x86_64 GNU/Linux',
+        outClass: 'ok'
+      },
+      {
+        type: 'prompt',
+        cmd: 'nmap -sC -sV -T4 target.com',
+        out: `PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 9.3
+80/tcp   open  http    nginx 1.24.0
+443/tcp  open  https   nginx
+Service Info: OS: Linux`,
+        outClass: 'ok'
+      },
+      {
+        type: 'prompt',
+        cmd: 'gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/common.txt',
+        out: `/admin               (Status: 301)
+/login               (Status: 200)
+/dashboard           (Status: 302)
+/uploads             (Status: 403)`,
+        outClass: 'ok'
+      },
+      {
+        type: 'prompt',
+        cmd: 'whatweb target.com',
+        out: `HTTPServer[nginx], IP[192.168.1.10], Title[Login Panel],
+PHP[8.2], Cookies[PHPSESSID]`,
+        outClass: 'ok'
+      },
+      {
+        type: 'prompt',
+        cmd: 'wpscan --url http://target.com --enumerate u',
+        out: `[+] Found 2 users:
+ - admin
+ - testuser`,
+        outClass: 'warn'
+      },
+      {
+        type: 'prompt',
+        cmd: 'sqlmap -u "http://target.com/login?id=1" --batch --dbs',
+        out: `[INFO] available databases:
+[*] users
+[*] information_schema`,
+        outClass: 'err'
+      },
+      {
+        type: 'prompt',
+        cmd: 'echo "access granted" > report.txt',
+        out: 'report saved → ./report.txt',
+        outClass: 'ok'
+      }
     ];
 
     const tbody = document.getElementById('terminal-body');
@@ -1462,7 +1519,7 @@
       const outLines = line.out.split('\n');
       outLines.forEach(ol => {
         const d = document.createElement('div');
-        d.className = 't-line ' + line.outClass;
+        d.className = 't-line t-' + line.outClass;
         d.textContent = ol;
         tbody.appendChild(d);
       });
