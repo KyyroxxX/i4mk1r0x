@@ -863,22 +863,31 @@
 
     .project-img {
       width: 100%;
-      height: 200px;
+      height: 380px; /* Taller image for better framing */
       background-size: cover;
-      background-position: center;
+      background-position: top center; /* Show the top of the dashboard */
       position: relative;
       background-image: url('assets/breakerfixer_preview.png');
+      transition: transform 0.6s ease;
+    }
+
+    .project-card:hover .project-img {
+      transform: scale(1.05); /* Subtle zoom on hover */
     }
 
     .project-img::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, transparent 40%, rgba(30, 30, 46, 0.9));
+      background: linear-gradient(to bottom, transparent 40%, rgba(30, 30, 46, 1));
+      z-index: 1;
     }
 
     .project-info {
-      padding: 1.8rem;
+      padding: 2.5rem;
+      position: relative;
+      z-index: 2;
+      background: var(--bg-alt); /* Ensure text is readable */
     }
 
     .project-title {
