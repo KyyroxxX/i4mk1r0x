@@ -819,52 +819,61 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 3rem;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 4rem;
       align-items: center;
     }
 
     .profile-pic-container {
       position: relative;
       width: 100%;
-      max-width: 320px;
+      max-width: 280px;
       margin: 0 auto;
     }
 
     .profile-pic-wrapper {
       position: relative;
-      border-radius: 20px;
+      aspect-ratio: 4 / 5;
+      border-radius: 12px;
       overflow: hidden;
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 20px rgba(203, 166, 247, 0.3);
-      transition: all 0.4s ease;
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 25px rgba(203, 166, 247, 0.2);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
+    /* Neon Corners for the Photo */
+    .profile-pic-wrapper::before,
+    .profile-pic-wrapper::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--accent-pink);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .profile-pic-wrapper::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+    .profile-pic-wrapper::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
     .profile-pic-wrapper:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 40px rgba(203, 166, 247, 0.5);
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(203, 166, 247, 0.4);
+      border-color: var(--accent-pink);
     }
 
     .profile-pic {
       width: 100%;
       height: 100%;
-      display: block;
       object-fit: cover;
-      filter: contrast(1.1) brightness(0.9);
-      transition: filter 0.4s ease;
+      object-position: center 15%; /* Focus on the face */
+      filter: contrast(1.05) brightness(0.95);
+      transition: all 0.4s ease;
     }
 
     .profile-pic-wrapper:hover .profile-pic {
-      filter: contrast(1.2) brightness(1);
-    }
-
-    .profile-glow {
-      position: absolute;
-      inset: -10px;
-      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-      opacity: 0.2;
-      z-index: -1;
-      filter: blur(20px);
+      filter: contrast(1.1) brightness(1.05);
+      transform: scale(1.1);
     }
 
     .about-text p {
@@ -1676,11 +1685,13 @@
 
     <div class="hero-content">
       <div class="hero-tag" data-i18n="hero_tag">Security Researcher · Ethical Hacker</div>
-      <h1 class="hero-name glitch-hover" style="font-size: clamp(2rem, 8vw, 6rem); white-space: nowrap;">
+      <h1 class="hero-name glitch-hover" style="font-size: clamp(2rem, 6vw, 4.5rem); margin-bottom: 0.5rem;">
         Alejandro De Luque
-        <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.4em; color: var(--accent-pink); margin-top: 0.5rem;">aka Kyrox</span>
       </h1>
-      <p class="hero-subtitle" data-i18n="hero_subtitle">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--accent-pink); margin-bottom: 2rem; letter-spacing: 0.2em; opacity: 0.8;">
+        [ <span data-i18n="hero_aka">aka Kyrox</span> ]
+      </div>
+      <p class="hero-subtitle" data-i18n="hero_subtitle" style="margin-bottom: 2.5rem;">
         <span class="highlight">Ciberseguridad</span> & Arch Linux enjoyer
       </p>
       <div class="hero-ctas">
@@ -1933,7 +1944,7 @@
       <div class="writeups-list">
         <a href="https://breakerxfixer.online/writeups.html" target="_blank" class="writeup-item">
           <div class="writeup-item-left">
-            <div class="writeup-date">2024 - 2025</div>
+            <div class="writeup-date" data-i18n="writeup_date">2024 - actualidad</div>
             <div class="writeup-info">
               <div class="writeup-name" data-i18n="writeup_official">Writeups Oficiales: BreakerFixer</div>
               <div class="writeup-meta">HTB · THM · OSCP Style Labs · CVE Analysis</div>
@@ -2039,6 +2050,7 @@
     const translations = {
       en: {
         hero_tag: "Security Researcher · Ethical Hacker",
+        hero_aka: "aka Kyrox",
         hero_subtitle: '<span class="highlight">Cybersecurity</span> & Arch Linux enjoyer',
         hero_cta_contact: "Contact Me",
         hero_cta_explore: "Explore Docs",
@@ -2087,6 +2099,7 @@
         writeups_label: "Writeups",
         writeups_title: "Intrusion Analysis",
         writeup_intro: "Detailed technical documentation on machine resolution, exploit analysis, and modern pentesting techniques.",
+        writeup_date: "2024 - present",
         writeup_official: "Official Writeups: BreakerFixer",
         contact_label: "Contact",
         contact_title: "Contact",
@@ -2106,6 +2119,7 @@
       },
       es: {
         hero_tag: "Security Researcher · Ethical Hacker",
+        hero_aka: "aka Kyrox",
         hero_subtitle: '<span class="highlight">Ciberseguridad</span> & Arch Linux enjoyer',
         hero_cta_contact: "Contactar",
         hero_cta_explore: "Explorar docs",
@@ -2154,6 +2168,7 @@
         writeups_label: "Writeups",
         writeups_title: "Análisis de Intrusión",
         writeup_intro: "Documentación técnica detallada sobre la resolución de máquinas, análisis de exploits y técnicas modernas de pentesting.",
+        writeup_date: "2024 - actualidad",
         writeup_official: "Writeups Oficiales: BreakerFixer",
         contact_label: "Contact",
         contact_title: "Contacto",
