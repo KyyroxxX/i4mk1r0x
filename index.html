@@ -8,7 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;600;800&family=Orbitron:wght@900&display=swap"
+    <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;600;800&family=Orbitron:wght@900&display=swap"
     rel="stylesheet">
+  <!-- FontAwesome 6 for Reliable Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     :root {
       --bg: #1e1e2e;
@@ -142,12 +146,32 @@
     }
 
     @keyframes glitch-anim {
-      0% { transform: translate(0); text-shadow: -2px 0 var(--accent-red), 2px 0 var(--accent-green); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(-2px, -2px); text-shadow: 2px 0 var(--accent-red), -2px 0 var(--accent-green); }
-      60% { transform: translate(2px, 2px); }
-      80% { transform: translate(2px, -2px); text-shadow: -2px 0 var(--accent-red), 2px 0 var(--accent-green); }
-      100% { transform: translate(0); }
+      0% {
+        transform: translate(0);
+        text-shadow: -2px 0 var(--accent-red), 2px 0 var(--accent-green);
+      }
+
+      20% {
+        transform: translate(-2px, 2px);
+      }
+
+      40% {
+        transform: translate(-2px, -2px);
+        text-shadow: 2px 0 var(--accent-red), -2px 0 var(--accent-green);
+      }
+
+      60% {
+        transform: translate(2px, 2px);
+      }
+
+      80% {
+        transform: translate(2px, -2px);
+        text-shadow: -2px 0 var(--accent-red), 2px 0 var(--accent-green);
+      }
+
+      100% {
+        transform: translate(0);
+      }
     }
 
     .terminal-scanline {
@@ -165,8 +189,13 @@
     }
 
     @keyframes scanline {
-      from { background-position: 0 0; }
-      to { background-position: 0 100%; }
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 0 100%;
+      }
     }
 
     /* ── Enhanced Polybar (Nav) ── */
@@ -304,7 +333,7 @@
       width: 90%;
       max-width: 500px;
       text-align: center;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
       transform: scale(0.9) translateY(20px);
       transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     }
@@ -452,13 +481,27 @@
     }
 
     @keyframes loader-slide {
-      0% { left: -40%; }
-      100% { left: 100%; }
+      0% {
+        left: -40%;
+      }
+
+      100% {
+        left: 100%;
+      }
     }
 
     @keyframes pulse-glow {
-      0%, 100% { opacity: 0.5; text-shadow: 0 0 10px var(--accent); }
-      50% { opacity: 1; text-shadow: 0 0 25px var(--accent); }
+
+      0%,
+      100% {
+        opacity: 0.5;
+        text-shadow: 0 0 10px var(--accent);
+      }
+
+      50% {
+        opacity: 1;
+        text-shadow: 0 0 25px var(--accent);
+      }
     }
 
     /* ── Splash Screen ── */
@@ -518,13 +561,27 @@
     }
 
     @keyframes loader-slide {
-      0% { left: -40%; }
-      100% { left: 100%; }
+      0% {
+        left: -40%;
+      }
+
+      100% {
+        left: 100%;
+      }
     }
 
     @keyframes pulse-glow {
-      0%, 100% { opacity: 0.4; text-shadow: 0 0 10px var(--accent); }
-      50% { opacity: 1; text-shadow: 0 0 30px var(--accent); }
+
+      0%,
+      100% {
+        opacity: 0.4;
+        text-shadow: 0 0 10px var(--accent);
+      }
+
+      50% {
+        opacity: 1;
+        text-shadow: 0 0 30px var(--accent);
+      }
     }
 
     /* ── Hero ── */
@@ -994,8 +1051,19 @@
       pointer-events: none;
     }
 
-    .profile-pic-wrapper::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
-    .profile-pic-wrapper::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+    .profile-pic-wrapper::before {
+      top: 10px;
+      left: 10px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .profile-pic-wrapper::after {
+      bottom: 10px;
+      right: 10px;
+      border-left: none;
+      border-top: none;
+    }
 
     .profile-pic-wrapper:hover {
       transform: translateY(-5px) scale(1.03);
@@ -1007,7 +1075,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 15%; /* Focus on the face */
+      object-position: center 15%;
+      /* Focus on the face */
       filter: contrast(1.05) brightness(0.95);
       transition: all 0.4s ease;
     }
@@ -1080,6 +1149,104 @@
       opacity: 0.4;
     }
 
+    /* ── Machines Section ── */
+    #machines {
+      background: var(--bg-alt);
+    }
+
+    .machines-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .machine-card {
+      background: rgba(30, 30, 46, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      overflow: hidden;
+      min-height: 200px;
+    }
+
+    .machine-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 45px rgba(203, 166, 247, 0.15);
+      background: rgba(30, 30, 46, 0.6);
+    }
+
+    .machine-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .machine-platform {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .machine-difficulty {
+      display: flex;
+      gap: 3px;
+    }
+
+    .diff-bar {
+      width: 4px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1px;
+    }
+
+    .diff-bar.active.green { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
+    .diff-bar.active.orange { background: var(--accent-peach); box-shadow: 0 0 8px var(--accent-peach); }
+    .diff-bar.active.red { background: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
+
+    .machine-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-bright);
+    }
+
+    .machine-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .writeup-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: color 0.3s;
+    }
+
+    .writeup-link:hover {
+      color: var(--accent);
+    }
+
+    .writeup-link i {
+      font-size: 0.9rem;
+    }
+
     /* ── Reveal Animation ── */
     .reveal {
       opacity: 0;
@@ -1093,6 +1260,7 @@
       transform: translateY(0);
       filter: blur(0);
     }
+
 
 
     /* ── Skills & Tags ── */
@@ -1243,16 +1411,19 @@
 
     .project-img {
       width: 100%;
-      height: 380px; /* Taller image for better framing */
+      height: 380px;
+      /* Taller image for better framing */
       background-size: cover;
-      background-position: top center; /* Show the top of the dashboard */
+      background-position: top center;
+      /* Show the top of the dashboard */
       position: relative;
       background-image: url('assets/breakerfixer_preview.png');
       transition: transform 0.6s ease;
     }
 
     .project-card:hover .project-img {
-      transform: scale(1.05); /* Subtle zoom on hover */
+      transform: scale(1.05);
+      /* Subtle zoom on hover */
     }
 
     .project-img::after {
@@ -1267,7 +1438,8 @@
       padding: 2.5rem;
       position: relative;
       z-index: 2;
-      background: var(--bg-alt); /* Ensure text is readable */
+      background: var(--bg-alt);
+      /* Ensure text is readable */
     }
 
     .project-title {
@@ -1397,10 +1569,12 @@
         padding: 1.5rem;
         gap: 1.5rem;
       }
+
       .writeup-item-left {
         flex-direction: column;
         gap: 1rem;
       }
+
       .writeup-btn {
         display: none;
       }
@@ -1502,258 +1676,52 @@
       padding: 1rem;
       border-radius: 6px;
       outline: none;
-      transition: all 0.3s;
-      resize: none;
-    }
-
-    .form-input:focus,
-    .form-textarea:focus {
-      border-color: var(--accent);
-      background: var(--bg-crust);
-      box-shadow: 0 0 0 4px rgba(137, 180, 250, 0.1);
-    }
-
-    .form-textarea {
-      min-height: 120px;
-    }
-
-    .form-input::placeholder,
-    .form-textarea::placeholder {
-      color: var(--text-dim);
-    }
-
-    /* ── Footer ── */
-    footer {
-      padding: 3rem;
-      background: var(--bg-crust);
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-copy {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-    }
-
-    .footer-copy span {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .footer-status {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--accent-green);
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent-green);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1;
-        box-shadow: 0 0 0 0 rgba(0, 255, 159, 0.4);
-      }
-
-      50% {
-        opacity: 0.7;
-        box-shadow: 0 0 0 4px rgba(0, 255, 159, 0);
-      }
-    }
-
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--surface);
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-mauve);
-    }
-
-    /* ── Animations ── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
     .fade-in.visible {
       opacity: 1;
       transform: none;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 1200px) {
-      .widget-clock {
-        left: 2%;
-        scale: 0.8;
-      }
+    /* ── Responsive Polish ── */
 
-      .widget-music {
-        display: none;
-      }
+    /* ── Consolidated Responsive System ── */
 
-      .terminal {
-        width: 380px;
-        right: 2%;
-      }
-    }
+    /* Desktop (Default) */
+    .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    .machines-grid { grid-template-columns: repeat(3, 1fr); }
+    .skills-grid { grid-template-columns: repeat(3, 1fr); }
+    .certs-grid { grid-template-columns: repeat(2, 1fr); }
+    .projects-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 
+    /* Laptops & Tablets (1100px) */
     @media (max-width: 1100px) {
-      .widget-clock {
-        display: none;
-      }
-
-      .terminal {
-        position: relative;
-        inset: auto;
-        transform: none;
-        margin: 3rem auto 0;
-        width: 90%;
-        max-width: 500px;
-      }
-
-      .hero-content {
-        position: relative;
-        inset: auto;
-        transform: none;
-        padding-top: 5rem;
-        margin: 0 auto;
-      }
-
-      .desktop-widgets {
-        position: relative;
-        display: block;
-        height: auto;
-      }
-
-      #hero {
-        min-height: auto;
-        padding-bottom: 5rem;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-      
-      .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .hero-content { scale: 0.9; }
+      .terminal { position: relative; inset: auto; transform: none; margin: 3rem auto 0; width: 90%; max-width: 500px; }
+      .desktop-widgets { position: static; display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; }
+      .widget-clock, .widget-music { position: static; transform: none; scale: 1; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .machines-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
+    /* Mobile (768px) */
     @media (max-width: 768px) {
-      section {
-        padding: 4rem 1.2rem;
-      }
-
-      .bar-center, .bar-right {
-        display: none;
-      }
-
-      nav {
-        padding: 0.3rem 1rem;
-      }
-
-      .hero-name {
-        font-size: clamp(2.5rem, 12vw, 4.5rem);
-      }
-
-      .skills-grid, .certs-grid, .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .cert-card.featured {
-        grid-column: span 1;
-      }
-
-      .cert-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 1.5rem;
-        gap: 1.5rem;
-      }
-
-      .terminal {
-        width: 100%;
-        margin-top: 2rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project-img {
-        height: 250px;
-      }
+      section { padding: 4rem 1.5rem; }
+      .polybar .bar-center, .polybar .bar-right .tray-icon { display: none; }
+      .section-title { font-size: 2.2rem; }
+      .skills-grid, .machines-grid, .certs-grid { grid-template-columns: 1fr; }
+      .cert-card.featured { grid-column: span 1; }
+      .cert-card { flex-direction: column; text-align: center; }
     }
 
+    /* Phones (480px) */
     @media (max-width: 480px) {
-      .hero-ctas {
-        flex-direction: column;
-        width: 100%;
-      }
-      
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-    /* ── Scroll Indicator ── */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.8rem;
-      color: var(--text-dim);
-      text-decoration: none;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      opacity: 0.5;
-      transition: all 0.3s ease;
-      z-index: 10;
+      .hero-name { font-size: 2.5rem !important; }
+      .hero-ctas { flex-direction: column; width: 100%; }
+      .btn { width: 100%; justify-content: center; }
+      .stats-grid { grid-template-columns: 1fr; }
     }
 
-    .scroll-indicator:hover {
-      opacity: 1;
-      color: var(--accent);
-    }
-
-    .mouse {
-      width: 20px;
-      height: 32px;
-      border: 2px solid var(--text-dim);
-      border-radius: 20px;
-      position: relative;
-    }
 
     .wheel {
       width: 3px;
@@ -1778,7 +1746,6 @@
         transform: translateX(-50%) translateY(12px);
       }
     }
-
   </style>
 </head>
 
@@ -1823,9 +1790,9 @@
       <button class="lang-toggle-btn" onclick="openLangModal()">
         <span>EN/ES</span>
       </button>
-      <span class="tray-icon"></span>
-      <span class="tray-icon"></span>
-      <span class="tray-icon"></span>
+      <span class="tray-icon"><i class="fa-solid fa-wifi"></i></span>
+      <span class="tray-icon"><i class="fa-brands fa-bluetooth"></i></span>
+      <span class="tray-icon"><i class="fa-solid fa-volume-high"></i></span>
       <span class="tray-time" id="tray-clock">16:41</span>
     </div>
   </nav>
@@ -1885,7 +1852,7 @@
     <div class="terminal">
       <div class="terminal-header">
         <div class="terminal-icon"></div>
-        <span class="terminal-title">kyrox@mauvebox — zsh</span>
+        <span class="terminal-title">kyrox@archbox — zsh</span>
       </div>
       <div class="terminal-body" id="terminal-body">
         <!-- filled by JS -->
@@ -1936,22 +1903,22 @@
     <!-- Stats pushed to occupy full width under the text area -->
     <div class="stats-grid reveal">
       <div class="stat-card">
-        <div class="stat-icon">🛡️</div>
+        <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
         <div class="stat-num">1</div>
         <div class="stat-label" data-i18n="stat_cert">Certificación eJPT</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">🎓</div>
+        <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
         <div class="stat-num">ASIR</div>
         <div class="stat-label" data-i18n="stat_asir">Grado Superior cursando</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">⚔️</div>
+        <div class="stat-icon"><i class="fa-solid fa-skull-crossbones"></i></div>
         <div class="stat-num">CTF</div>
         <div class="stat-label" data-i18n="stat_ctf">Competidor activo</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">∞</div>
+        <div class="stat-icon"><i class="fa-solid fa-infinity"></i></div>
         <div class="stat-num">∞</div>
         <div class="stat-label" data-i18n="stat_curiosity">Curiosidad técnica</div>
       </div>
@@ -1965,10 +1932,11 @@
     <div class="section-divider"></div>
 
     <div class="skills-grid">
-      <div class="skill-card fade-in">
-        <div class="skill-icon">🔍</div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
         <div class="skill-name" data-i18n="skill_recon_name">Reconocimiento & OSINT</div>
-        <div class="skill-desc" data-i18n="skill_recon_desc">Inteligencia de fuentes abiertas, enumeración masiva, identificación de activos y vectores de ataque iniciales.</div>
+        <div class="skill-desc" data-i18n="skill_recon_desc">Inteligencia de fuentes abiertas, enumeración masiva,
+          identificación de activos y vectores de ataque iniciales.</div>
         <div class="skill-tags">
           <span class="tag">Nmap</span>
           <span class="tag">Shodan</span>
@@ -1976,10 +1944,11 @@
           <span class="tag">ffuf / subfinder</span>
         </div>
       </div>
-      <div class="skill-card fade-in">
-        <div class="skill-icon">💥</div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-solid fa-burst"></i></div>
         <div class="skill-name" data-i18n="skill_expl_name">Explotación & Intrusión</div>
-        <div class="skill-desc" data-i18n="skill_expl_desc">Explotación de vulnerabilidades conocidas, pentesting de Active Directory y técnicas de intrusión controlada.</div>
+        <div class="skill-desc" data-i18n="skill_expl_desc">Explotación de vulnerabilidades conocidas, pentesting de
+          Active Directory y técnicas de intrusión controlada.</div>
         <div class="skill-tags">
           <span class="tag">Metasploit</span>
           <span class="tag">Active Directory</span>
@@ -1987,10 +1956,11 @@
           <span class="tag">Impacket</span>
         </div>
       </div>
-      <div class="skill-card fade-in">
-        <div class="skill-icon">🌐</div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-solid fa-network-wired"></i></div>
         <div class="skill-name" data-i18n="skill_infra_name">Infraestructura & Redes</div>
-        <div class="skill-desc" data-i18n="skill_infra_desc">Seguridad en redes corporativas, pivoting, túneles, análisis de tráfico y segmentación (Hardening).</div>
+        <div class="skill-desc" data-i18n="skill_infra_desc">Seguridad en redes corporativas, pivoting, túneles,
+          análisis de tráfico y segmentación (Hardening).</div>
         <div class="skill-tags">
           <span class="tag">Wireshark</span>
           <span class="tag">Pivoting</span>
@@ -1998,10 +1968,11 @@
           <span class="tag">Proxychains</span>
         </div>
       </div>
-      <div class="skill-card fade-in">
-        <div class="skill-icon">🐧</div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-solid fa-server"></i></div>
         <div class="skill-name" data-i18n="skill_sys_name">Sistemas e Infraestructura</div>
-        <div class="skill-desc" data-i18n="skill_sys_desc">Administración avanzada de sistemas, despliegue de infraestructura segura y automatización de servicios.</div>
+        <div class="skill-desc" data-i18n="skill_sys_desc">Administración avanzada de sistemas, despliegue de
+          infraestructura segura y automatización de servicios.</div>
         <div class="skill-tags">
           <span class="tag">Arch Linux</span>
           <span class="tag">Bash Scripting</span>
@@ -2009,10 +1980,11 @@
           <span class="tag" data-i18n="tag_hardening">Security Hardening</span>
         </div>
       </div>
-      <div class="skill-card fade-in">
-        <div class="skill-icon">🕸️</div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-solid fa-spider"></i></div>
         <div class="skill-name" data-i18n="skill_web_name">Pentesting Web (OWASP)</div>
-        <div class="skill-desc" data-i18n="skill_web_desc">Auditoría de aplicaciones basadas en el OWASP Top 10, pruebas de lógica de negocio y seguridad en APIs.</div>
+        <div class="skill-desc" data-i18n="skill_web_desc">Auditoría de aplicaciones basadas en el OWASP Top 10, pruebas
+          de lógica de negocio y seguridad en APIs.</div>
         <div class="skill-tags">
           <span class="tag">Burp Suite Pro</span>
           <span class="tag">Fuzzing</span>
@@ -2020,10 +1992,11 @@
           <span class="tag">JWT / Auth</span>
         </div>
       </div>
-      <div class="skill-card fade-in">
-        <div class="skill-icon">🐍</div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-brands fa-python"></i></div>
         <div class="skill-name" data-i18n="skill_script_name">Scripting & Automatización</div>
-        <div class="skill-desc" data-i18n="skill_script_desc">Desarrollo de herramientas personalizadas de seguridad y automatización de tareas de auditoría.</div>
+        <div class="skill-desc" data-i18n="skill_script_desc">Desarrollo de herramientas personalizadas de seguridad y
+          automatización de tareas de auditoría.</div>
         <div class="skill-tags">
           <span class="tag">Python</span>
           <span class="tag">Go</span>
@@ -2042,7 +2015,7 @@
 
     <div class="certs-grid">
       <div class="cert-card featured fade-in">
-        <div class="cert-badge">🛡️</div>
+        <div class="cert-badge"><i class="fa-solid fa-shield-halved"></i></div>
         <div class="cert-info">
           <div class="cert-name">eJPT — eLearnSecurity Junior Penetration Tester</div>
           <div class="cert-issuer" data-i18n="cert_ejpt_issuer">eLearnSecurity / INE · Certificado</div>
@@ -2054,18 +2027,18 @@
         </div>
       </div>
       <div class="cert-card fade-in">
-        <div class="cert-badge">📟</div>
+        <div class="cert-badge"><i class="fa-solid fa-microchip"></i></div>
         <div class="cert-info">
           <div class="cert-name" data-i18n="cert_smr_name">SMR — Sistemas Microinformáticos y Redes</div>
           <div class="cert-issuer" data-i18n="cert_smr_issuer">Grado Medio · Completado</div>
           <div class="cert-desc" data-i18n="cert_smr_desc">
-            Formación técnica base en hardware, montaje de equipos, redes locales, 
+            Formación técnica base en hardware, montaje de equipos, redes locales,
             administración de sistemas operativos y servicios microinformáticos.
           </div>
         </div>
       </div>
       <div class="cert-card fade-in">
-        <div class="cert-badge">🎓</div>
+        <div class="cert-badge"><i class="fa-solid fa-graduation-cap"></i></div>
         <div class="cert-info">
           <div class="cert-name" data-i18n="cert_asir_name">ASIR — Administración de Sistemas Informáticos en Red</div>
           <div class="cert-issuer" data-i18n="cert_asir_issuer">Formación Profesional · En curso</div>
@@ -2076,7 +2049,7 @@
         </div>
       </div>
       <div class="cert-card featured reveal">
-        <div class="cert-badge">⚔️</div>
+        <div class="cert-badge"><i class="fa-solid fa-skull-crossbones"></i></div>
         <div class="cert-info">
           <div class="cert-name" data-i18n="cert_ctf_name">CTF Player & Lab Practitioner</div>
           <div class="cert-issuer">HackTheBox · TryHackMe · PicoCTF</div>
@@ -2086,6 +2059,21 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Machines -->
+  <section id="machines">
+    <div class="section-label" data-i18n="machines_label">Solved Machines</div>
+    <h2 class="section-title glitch-hover" data-i18n="machines_title">Máquinas Resueltas</h2>
+    <div class="section-divider"></div>
+    <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 2.5rem; display: flex; align-items: center; gap: 0.8rem;">
+      <i class="fa-solid fa-circle-info"></i>
+      <span data-i18n="machines_note">* Ten en cuenta que todos los writeups se encuentran íntegramente en inglés.</span>
+    </p>
+
+    <div class="machines-grid reveal" id="machines-grid">
+      <!-- Cards generated by JS for better translation handling -->
     </div>
   </section>
 
@@ -2103,8 +2091,8 @@
             BreakerFixer <span data-i18n="project_live">Live</span>
           </div>
           <p class="project-desc" data-i18n="project_desc">
-            Plataforma dedicada al aprendizaje de ciberseguridad ofensiva. 
-            Incluye guías detalladas, retos prácticos y una comunidad 
+            Plataforma dedicada al aprendizaje de ciberseguridad ofensiva.
+            Incluye guías detalladas, retos prácticos y una comunidad
             enfocada en el crecimiento mutuo en el sector.
           </p>
           <a href="https://breakerxfixer.online" target="_blank" class="project-link" data-i18n="project_link">
@@ -2123,7 +2111,7 @@
 
     <div class="writeups-container fade-in">
       <p class="writeup-intro" data-i18n="writeup_intro">
-        Documentación técnica detallada sobre la resolución de máquinas, 
+        Documentación técnica detallada sobre la resolución de máquinas,
         análisis de exploits y técnicas modernas de pentesting.
       </p>
 
@@ -2137,7 +2125,8 @@
             </div>
           </div>
           <div class="writeup-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -2182,15 +2171,18 @@
         <form class="contact-form" onsubmit="handleSubmit(event)">
           <div class="form-group">
             <label class="form-label" data-i18n="form_name">Nombre</label>
-            <input type="text" name="name" class="form-input" data-i18n-placeholder="form_name_placeholder" placeholder="Tu nombre" required>
+            <input type="text" name="name" class="form-input" data-i18n-placeholder="form_name_placeholder"
+              placeholder="Tu nombre" required>
           </div>
           <div class="form-group">
             <label class="form-label" data-i18n="form_email">Email</label>
-            <input type="email" name="email" class="form-input" data-i18n-placeholder="form_email_placeholder" placeholder="tu@email.com" required>
+            <input type="email" name="email" class="form-input" data-i18n-placeholder="form_email_placeholder"
+              placeholder="tu@email.com" required>
           </div>
           <div class="form-group">
             <label class="form-label" data-i18n="form_msg">Mensaje</label>
-            <textarea name="message" class="form-textarea" data-i18n-placeholder="form_msg_placeholder" placeholder="Cuéntame tu propuesta..." required></textarea>
+            <textarea name="message" class="form-textarea" data-i18n-placeholder="form_msg_placeholder"
+              placeholder="Cuéntame tu propuesta..." required></textarea>
           </div>
           <button type="submit" class="btn btn-primary"
             style="cursor:none; border:none; width:100%; justify-content:center;">
@@ -2260,7 +2252,7 @@
         skill_sys_name: "Systems & Infrastructure",
         skill_sys_desc: "Advanced systems administration, secure infrastructure deployment, and service automation.",
         tag_hardening: "Security Hardening",
-        skill_web_name: "Web Pentesting (OWASP)",
+        skill_web_name: "Pentesting Web (OWASP)",
         skill_web_desc: "Application auditing based on OWASP Top 10, business logic testing, and API security.",
         skill_script_name: "Scripting & Automation",
         skill_script_desc: "Development of custom security tools and automation of auditing tasks.",
@@ -2277,6 +2269,10 @@
         cert_asir_desc: "Higher Degree in systems administration, networking, virtualization, security, and cloud services.",
         cert_ctf_name: "CTF Player & Lab Practitioner",
         cert_ctf_desc: "Active participation in practice platforms and global cybersecurity competitions.",
+        machines_label: "Solved Machines",
+        machines_title: "Solved Machines",
+        machines_note: "* Please note that all writeups are entirely in English.",
+        read_writeup: "READ WRITEUP",
         projects_label: "Projects",
         projects_title: "Featured Projects",
         project_live: "Live",
@@ -2346,6 +2342,10 @@
         cert_asir_desc: "Grado Superior en administración de sistemas, redes, virtualización, seguridad y servicios en la nube.",
         cert_ctf_name: "CTF Player & Lab Practitioner",
         cert_ctf_desc: "Participación activa en plataformas de práctica y competiciones de ciberseguridad a nivel global.",
+        machines_label: "Solved Machines",
+        machines_title: "Máquinas Resueltas",
+        machines_note: "* Ten en cuenta que todos los writeups se encuentran íntegramente en inglés.",
+        read_writeup: "LEER WRITEUP",
         projects_label: "Projects",
         projects_title: "Proyectos Destacados",
         project_live: "Live",
@@ -2379,7 +2379,7 @@
     function setLanguage(lang) {
       currentLang = lang;
       localStorage.setItem('kyrox-lang', lang);
-      
+
       // Update text
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -2406,6 +2406,9 @@
 
       // Close modal
       document.getElementById('lang-modal').classList.remove('active');
+      
+      // Re-render machines to update labels
+      renderMachines();
     }
 
     function openLangModal() {
@@ -2544,13 +2547,6 @@ Service Info: OS: Linux`,
     // ── Splash Screen Logic ──
     window.addEventListener('load', () => {
       setTimeout(() => {
-        document.getElementById('splash').classList.add('hidden');
-      }, 1000);
-    });
-
-    // ── Splash Screen Logic ──
-    window.addEventListener('load', () => {
-      setTimeout(() => {
         const splash = document.getElementById('splash');
         if (splash) splash.classList.add('hidden');
       }, 1200);
@@ -2576,7 +2572,46 @@ Service Info: OS: Linux`,
     document.querySelectorAll('.reveal, .fade-in').forEach(el => revealObserver.observe(el));
 
 
-    // ── Real-time Clock ──
+      // Machines Section Configuration
+      const machinesGrid = document.getElementById('machines-grid');
+      const machines = [
+        { name: 'Keeper', platform: 'HACKTHEBOX', difficulty: 2, file: 'keeper.md', type: 'green' },
+        { name: 'Nibbles', platform: 'HACKTHEBOX', difficulty: 1, file: 'nibbles.md', type: 'green' },
+        { name: 'Lame', platform: 'HACKTHEBOX', difficulty: 1, file: 'lame.md', type: 'green' },
+        { name: 'Anonymous', platform: 'TRYHACKME', difficulty: 2, file: 'anonymous.md', type: 'orange' },
+        { name: 'GoldenEye', platform: 'TRYHACKME', difficulty: 3, file: 'goldeneye.md', type: 'orange' },
+        { name: 'Cybercrafted', platform: 'TRYHACKME', difficulty: 4, file: 'cybercrafted.md', type: 'red' }
+      ];
+
+      function renderMachines() {
+        machinesGrid.innerHTML = machines.map(m => {
+          const bars = Array(4).fill(0).map((_, i) => 
+            `<div class="diff-bar ${i < m.difficulty ? 'active ' + m.type : ''}"></div>`
+          ).join('');
+
+          return `
+            <div class="machine-card">
+              <div class="machine-card-header">
+                <span class="machine-platform">${m.platform}</span>
+                <div class="machine-difficulty">
+                  ${bars}
+                </div>
+              </div>
+              <div class="machine-name">${m.name}</div>
+              <div class="machine-footer">
+                <a href="writeup.html?file=${m.file}" target="_blank" class="writeup-link">
+                  <span data-i18n="read_writeup">${translations[currentLang || 'en'].read_writeup}</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      renderMachines();
+
+      // ── Real-time Clock ──
     function updateClock() {
       const now = new Date();
       const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writeup — Kyrox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;600;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    :root {
+      --bg: #1e1e2e;
+      --bg-alt: #181825;
+      --accent: #cba6f7;
+      --text: #cdd6f4;
+      --text-dim: #9399b2;
+      --border: #45475a;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      margin-bottom: 3rem;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateX(-5px);
+    }
+
+    /* Markdown Styling */
+    #content h1 { font-size: 3rem; margin-bottom: 2rem; color: #fff; }
+    #content h2 { font-size: 2rem; margin-top: 3rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    #content h3 { font-size: 1.5rem; margin-top: 2rem; color: #fff; }
+    #content p { margin-bottom: 1.5rem; color: var(--text-dim); }
+    #content blockquote { border-left: 4px solid var(--accent); padding-left: 1.5rem; margin: 2rem 0; color: var(--text); font-style: italic; background: rgba(203, 166, 247, 0.05); padding: 1rem 1.5rem; border-radius: 0 8px 8px 0; }
+    #content img { max-width: 100%; border-radius: 12px; margin: 2rem 0; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    #content strong { color: #fff; font-weight: 700; }
+    
+    /* Code Blocks */
+    pre[class*="language-"] {
+      border-radius: 12px;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      background: #11111b !important;
+    }
+    
+    code {
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 0.9rem !important;
+    }
+
+    .loading {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 10rem;
+      color: var(--accent);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>VOLVER AL PORTFOLIO</span>
+    </a>
+    <div id="content">
+      <div class="loading">ACCESING SYSTEMS... LOADING WRITEUP</div>
+    </div>
+  </div>
+
+  <!-- Marked and Prism Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+  <script>
+    async function loadWriteup() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fileName = urlParams.get('file');
+      const contentDiv = document.getElementById('content');
+
+      if (!fileName) {
+        contentDiv.innerHTML = '<h1>Error: No se ha especificado ningn archivo.</h1>';
+        return;
+      }
+
+      try {
+        const response = await fetch(`writeups/${fileName}`);
+        if (!response.ok) throw new Error('File not found');
+        const markdown = await response.text();
+        
+        contentDiv.innerHTML = marked.parse(markdown);
+        
+        // Trigger Highlight.js / Prism
+        Prism.highlightAll();
+        
+        // Update Page Title
+        const h1 = contentDiv.querySelector('h1');
+        if (h1) document.title = `${h1.innerText} — Kyrox`;
+        
+      } catch (err) {
+        console.error(err);
+        contentDiv.innerHTML = `
+          <h1 style="color: #f38ba8">ERROR 404</h1>
+          <p>SISTEMA: El archivo <strong>${fileName}</strong> no ha sido localizado en el servidor.</p>
+        `;
+      }
+    }
+
+    loadWriteup();
+  </script>
+</body>
+
+</html>
