@@ -29,6 +29,8 @@
       --glow: 0 4px 15px rgba(203, 166, 247, 0.3);
       --radius: 12px;
       --shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
+      --glass: rgba(24, 24, 37, 0.6);
+      --glass-border: rgba(203, 166, 247, 0.2);
     }
 
     *,
@@ -131,6 +133,40 @@
       pointer-events: none;
       mask-image: radial-gradient(circle at center, black, transparent 80%);
       -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
+    }
+
+    /* ── Glitch & Scanline ── */
+    .glitch-hover:hover {
+      animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+      color: var(--accent-pink);
+    }
+
+    @keyframes glitch-anim {
+      0% { transform: translate(0); text-shadow: -2px 0 var(--accent-red), 2px 0 var(--accent-green); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); text-shadow: 2px 0 var(--accent-red), -2px 0 var(--accent-green); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); text-shadow: -2px 0 var(--accent-red), 2px 0 var(--accent-green); }
+      100% { transform: translate(0); }
+    }
+
+    .terminal-scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 50%, rgba(203, 166, 247, 0.05) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 3;
+      animation: scanline 10s linear infinite;
+      opacity: 0.3;
+    }
+
+    @keyframes scanline {
+      from { background-position: 0 0; }
+      to { background-position: 0 100%; }
     }
 
     /* ── Enhanced Polybar (Nav) ── */
@@ -238,6 +274,126 @@
     .tray-time {
       font-weight: 600;
       color: var(--text);
+    }
+
+    /* ── Language Selector ── */
+    #lang-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(17, 17, 27, 0.85);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    #lang-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lang-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 3rem;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    #lang-modal.active .lang-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .lang-logo {
+      width: 60px;
+      height: 60px;
+      background: var(--accent);
+      mask: url('assets/archlinux.svg') no-repeat center;
+      mask-size: contain;
+      -webkit-mask: url('assets/archlinux.svg') no-repeat center;
+      -webkit-mask-size: contain;
+      margin: 0 auto 1.5rem;
+    }
+
+    .lang-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text-bright);
+    }
+
+    .lang-subtitle {
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      font-size: 0.9rem;
+    }
+
+    .lang-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .lang-btn {
+      background: rgba(49, 50, 68, 0.4);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--accent);
+      background: rgba(203, 166, 247, 0.1);
+      transform: translateY(-5px);
+    }
+
+    .lang-flag {
+      font-size: 1.5rem;
+    }
+
+    .lang-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .lang-toggle-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .lang-toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .lang-toggle-btn i {
+      font-size: 0.8rem;
     }
 
     /* ── Hero ── */
@@ -737,8 +893,8 @@
 
     .skill-card:hover {
       border-color: var(--accent-mauve);
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px -10px rgba(203, 166, 247, 0.2), inset 0 0 20px rgba(203, 166, 247, 0.05);
     }
 
     .skill-icon {
@@ -810,7 +966,8 @@
 
     .cert-card:hover {
       border-color: var(--accent-mauve);
-      transform: scale(1.01);
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: 0 15px 30px -5px rgba(203, 166, 247, 0.15);
     }
 
     .cert-badge {
@@ -1429,6 +1586,9 @@
       <div class="ws-icon ghost"></div>
     </div>
     <div class="bar-right">
+      <button class="lang-toggle-btn" onclick="openLangModal()">
+        <span>EN/ES</span>
+      </button>
       <span class="tray-icon"></span>
       <span class="tray-icon"></span>
       <span class="tray-icon"></span>
@@ -1472,16 +1632,16 @@
     </div>
 
     <div class="hero-content">
-      <div class="hero-tag">Security Researcher · Ethical Hacker</div>
-      <h1 class="hero-name">
+      <div class="hero-tag" data-i18n="hero_tag">Security Researcher · Ethical Hacker</div>
+      <h1 class="hero-name glitch-hover">
         KYROX
       </h1>
-      <p class="hero-subtitle">
-        <span class="highlight">Cybersecurity</span> &amp; Arch Linux
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        <span class="highlight">Cybersecurity</span> & Arch Linux
       </p>
       <div class="hero-ctas">
-        <a href="#contact" class="btn btn-primary">Contactar</a>
-        <a href="#about" class="btn btn-secondary">Explorar docs</a>
+        <a href="#contact" class="btn btn-primary" data-i18n="hero_cta_contact">Contactar</a>
+        <a href="#about" class="btn btn-secondary" data-i18n="hero_cta_explore">Explorar docs</a>
       </div>
     </div>
 
@@ -1493,6 +1653,7 @@
       <div class="terminal-body" id="terminal-body">
         <!-- filled by JS -->
       </div>
+      <div class="terminal-scanline"></div>
     </div>
 
     <!-- Scroll Indicator -->
@@ -1506,24 +1667,24 @@
 
   <!-- About -->
   <section id="about">
-    <div class="section-label">About me</div>
-    <h2 class="section-title">Sobre mí</h2>
+    <div class="section-label" data-i18n="about_label">About me</div>
+    <h2 class="section-title glitch-hover" data-i18n="about_title">Sobre mí</h2>
     <div class="section-divider"></div>
 
     <div class="about-grid">
       <div class="about-text fade-in">
-        <p>
+        <p data-i18n="about_p1">
           Soy <strong>Kyrox</strong>, un apasionado de la ciberseguridad con enfoque
           en el hacking ético y la seguridad ofensiva. Actualmente cursando el
           <strong>Grado Superior de ASIR</strong> (Administración de Sistemas Informáticos
           en Red) mientras amplío mis conocimientos en pentesting y análisis forense.
         </p>
-        <p>
+        <p data-i18n="about_p2">
           Certificado con el <strong>eJPT (eLearnSecurity Junior Penetration Tester)</strong>,
           una acreditación que valida mis habilidades en reconocimiento, explotación
           de vulnerabilidades y post-explotación en entornos reales.
         </p>
-        <p>
+        <p data-i18n="about_p3">
           Mi objetivo es dominar cada capa de los sistemas, desde la red hasta la
           aplicación, para comprender y neutralizar las amenazas antes de que ocurran.
         </p>
@@ -1532,19 +1693,19 @@
       <div class="stats-grid fade-in">
         <div class="stat-card">
           <div class="stat-num">1</div>
-          <div class="stat-label">Certificación eJPT</div>
+          <div class="stat-label" data-i18n="stat_cert">Certificación eJPT</div>
         </div>
         <div class="stat-card">
           <div class="stat-num">ASIR</div>
-          <div class="stat-label">Grado Superior cursando</div>
+          <div class="stat-label" data-i18n="stat_asir">Grado Superior cursando</div>
         </div>
         <div class="stat-card">
           <div class="stat-num">CTF</div>
-          <div class="stat-label">Competidor activo</div>
+          <div class="stat-label" data-i18n="stat_ctf">Competidor activo</div>
         </div>
         <div class="stat-card">
           <div class="stat-num">∞</div>
-          <div class="stat-label">Curiosidad técnica</div>
+          <div class="stat-label" data-i18n="stat_curiosity">Curiosidad técnica</div>
         </div>
       </div>
     </div>
@@ -1552,15 +1713,15 @@
 
   <!-- Skills -->
   <section id="skills">
-    <div class="section-label">Skills</div>
-    <h2 class="section-title">Habilidades</h2>
+    <div class="section-label" data-i18n="skills_label">Skills</div>
+    <h2 class="section-title glitch-hover" data-i18n="skills_title">Habilidades</h2>
     <div class="section-divider"></div>
 
     <div class="skills-grid">
       <div class="skill-card fade-in">
         <div class="skill-icon">🔍</div>
-        <div class="skill-name">Reconocimiento & OSINT</div>
-        <div class="skill-desc">Inteligencia de fuentes abiertas, enumeración masiva, identificación de activos y vectores de ataque iniciales.</div>
+        <div class="skill-name" data-i18n="skill_recon_name">Reconocimiento & OSINT</div>
+        <div class="skill-desc" data-i18n="skill_recon_desc">Inteligencia de fuentes abiertas, enumeración masiva, identificación de activos y vectores de ataque iniciales.</div>
         <div class="skill-tags">
           <span class="tag">Nmap</span>
           <span class="tag">Shodan</span>
@@ -1570,8 +1731,8 @@
       </div>
       <div class="skill-card fade-in">
         <div class="skill-icon">💥</div>
-        <div class="skill-name">Explotación & Intrusión</div>
-        <div class="skill-desc">Explotación de vulnerabilidades conocidas, pentesting de Active Directory y técnicas de intrusión controlada.</div>
+        <div class="skill-name" data-i18n="skill_expl_name">Explotación & Intrusión</div>
+        <div class="skill-desc" data-i18n="skill_expl_desc">Explotación de vulnerabilidades conocidas, pentesting de Active Directory y técnicas de intrusión controlada.</div>
         <div class="skill-tags">
           <span class="tag">Metasploit</span>
           <span class="tag">Active Directory</span>
@@ -1581,8 +1742,8 @@
       </div>
       <div class="skill-card fade-in">
         <div class="skill-icon">🌐</div>
-        <div class="skill-name">Infraestructura & Redes</div>
-        <div class="skill-desc">Seguridad en redes corporativas, pivoting, túneles, análisis de tráfico y segmentación (Hardening).</div>
+        <div class="skill-name" data-i18n="skill_infra_name">Infraestructura & Redes</div>
+        <div class="skill-desc" data-i18n="skill_infra_desc">Seguridad en redes corporativas, pivoting, túneles, análisis de tráfico y segmentación (Hardening).</div>
         <div class="skill-tags">
           <span class="tag">Wireshark</span>
           <span class="tag">Pivoting</span>
@@ -1592,19 +1753,19 @@
       </div>
       <div class="skill-card fade-in">
         <div class="skill-icon">🐧</div>
-        <div class="skill-name">Sistemas e Infraestructura</div>
-        <div class="skill-desc">Administración avanzada de sistemas, despliegue de infraestructura segura y automatización de servicios.</div>
+        <div class="skill-name" data-i18n="skill_sys_name">Sistemas e Infraestructura</div>
+        <div class="skill-desc" data-i18n="skill_sys_desc">Administración avanzada de sistemas, despliegue de infraestructura segura y automatización de servicios.</div>
         <div class="skill-tags">
           <span class="tag">Arch Linux</span>
           <span class="tag">Bash Scripting</span>
           <span class="tag">SSH/Systemd</span>
-          <span class="tag">Security Hardening</span>
+          <span class="tag" data-i18n="tag_hardening">Security Hardening</span>
         </div>
       </div>
       <div class="skill-card fade-in">
         <div class="skill-icon">🕸️</div>
-        <div class="skill-name">Pentesting Web (OWASP)</div>
-        <div class="skill-desc">Auditoría de aplicaciones basadas en el OWASP Top 10, pruebas de lógica de negocio y seguridad en APIs.</div>
+        <div class="skill-name" data-i18n="skill_web_name">Pentesting Web (OWASP)</div>
+        <div class="skill-desc" data-i18n="skill_web_desc">Auditoría de aplicaciones basadas en el OWASP Top 10, pruebas de lógica de negocio y seguridad en APIs.</div>
         <div class="skill-tags">
           <span class="tag">Burp Suite Pro</span>
           <span class="tag">Fuzzing</span>
@@ -1614,13 +1775,13 @@
       </div>
       <div class="skill-card fade-in">
         <div class="skill-icon">🐍</div>
-        <div class="skill-name">Scripting & Automatización</div>
-        <div class="skill-desc">Desarrollo de herramientas personalizadas de seguridad y automatización de tareas de auditoría.</div>
+        <div class="skill-name" data-i18n="skill_script_name">Scripting & Automatización</div>
+        <div class="skill-desc" data-i18n="skill_script_desc">Desarrollo de herramientas personalizadas de seguridad y automatización de tareas de auditoría.</div>
         <div class="skill-tags">
           <span class="tag">Python</span>
           <span class="tag">Go</span>
           <span class="tag">Git / GitHub</span>
-          <span class="tag">Automation</span>
+          <span class="tag" data-i18n="tag_automation">Automation</span>
         </div>
       </div>
     </div>
@@ -1628,8 +1789,8 @@
 
   <!-- Certs -->
   <section id="certs">
-    <div class="section-label">Certifications</div>
-    <h2 class="section-title">Formación</h2>
+    <div class="section-label" data-i18n="certs_label">Certifications</div>
+    <h2 class="section-title glitch-hover" data-i18n="certs_title">Formación</h2>
     <div class="section-divider"></div>
 
     <div class="certs-grid">
@@ -1637,8 +1798,8 @@
         <div class="cert-badge">🛡️</div>
         <div class="cert-info">
           <div class="cert-name">eJPT — eLearnSecurity Junior Penetration Tester</div>
-          <div class="cert-issuer">eLearnSecurity / INE · Certificado</div>
-          <div class="cert-desc">
+          <div class="cert-issuer" data-i18n="cert_ejpt_issuer">eLearnSecurity / INE · Certificado</div>
+          <div class="cert-desc" data-i18n="cert_ejpt_desc">
             Certificación de nivel de entrada en penetration testing que valida habilidades prácticas
             en reconocimiento, escaneo de redes, explotación de vulnerabilidades y
             post-explotación. Evaluación 100% práctica en entorno de laboratorio real.
@@ -1648,9 +1809,9 @@
       <div class="cert-card fade-in">
         <div class="cert-badge">📟</div>
         <div class="cert-info">
-          <div class="cert-name">SMR — Sistemas Microinformáticos y Redes</div>
-          <div class="cert-issuer">Grado Medio · Completado</div>
-          <div class="cert-desc">
+          <div class="cert-name" data-i18n="cert_smr_name">SMR — Sistemas Microinformáticos y Redes</div>
+          <div class="cert-issuer" data-i18n="cert_smr_issuer">Grado Medio · Completado</div>
+          <div class="cert-desc" data-i18n="cert_smr_desc">
             Formación técnica base en hardware, montaje de equipos, redes locales, 
             administración de sistemas operativos y servicios microinformáticos.
           </div>
@@ -1659,9 +1820,9 @@
       <div class="cert-card fade-in">
         <div class="cert-badge">🎓</div>
         <div class="cert-info">
-          <div class="cert-name">ASIR — Administración de Sistemas Informáticos en Red</div>
-          <div class="cert-issuer">Formación Profesional · En curso</div>
-          <div class="cert-desc">
+          <div class="cert-name" data-i18n="cert_asir_name">ASIR — Administración de Sistemas Informáticos en Red</div>
+          <div class="cert-issuer" data-i18n="cert_asir_issuer">Formación Profesional · En curso</div>
+          <div class="cert-desc" data-i18n="cert_asir_desc">
             Grado Superior en administración de sistemas, redes, virtualización,
             seguridad y servicios en la nube.
           </div>
@@ -1670,9 +1831,9 @@
       <div class="cert-card fade-in">
         <div class="cert-badge">⚔️</div>
         <div class="cert-info">
-          <div class="cert-name">CTF Player &amp; Lab Practitioner</div>
+          <div class="cert-name" data-i18n="cert_ctf_name">CTF Player & Lab Practitioner</div>
           <div class="cert-issuer">HackTheBox · TryHackMe · PicoCTF</div>
-          <div class="cert-desc">
+          <div class="cert-desc" data-i18n="cert_ctf_desc">
             Participación activa en plataformas de práctica y competiciones
             de ciberseguridad a nivel global.
           </div>
@@ -1683,8 +1844,8 @@
 
   <!-- Projects -->
   <section id="projects">
-    <div class="section-label">Projects</div>
-    <h2 class="section-title">Proyectos Destacados</h2>
+    <div class="section-label" data-i18n="projects_label">Projects</div>
+    <h2 class="section-title glitch-hover" data-i18n="projects_title">Proyectos Destacados</h2>
     <div class="section-divider"></div>
 
     <div class="projects-grid">
@@ -1692,14 +1853,14 @@
         <div class="project-img"></div>
         <div class="project-info">
           <div class="project-title">
-            BreakerFixer <span>Live</span>
+            BreakerFixer <span data-i18n="project_live">Live</span>
           </div>
-          <p class="project-desc">
+          <p class="project-desc" data-i18n="project_desc">
             Plataforma dedicada al aprendizaje de ciberseguridad ofensiva. 
             Incluye guías detalladas, retos prácticos y una comunidad 
             enfocada en el crecimiento mutuo en el sector.
           </p>
-          <a href="https://breakerxfixer.online" target="_blank" class="project-link">
+          <a href="https://breakerxfixer.online" target="_blank" class="project-link" data-i18n="project_link">
             Visitar sitio oficial ▸
           </a>
         </div>
@@ -1709,12 +1870,12 @@
 
   <!-- Writeups -->
   <section id="writeups">
-    <div class="section-label">Writeups</div>
-    <h2 class="section-title">Análisis de Intrusión</h2>
+    <div class="section-label" data-i18n="writeups_label">Writeups</div>
+    <h2 class="section-title glitch-hover" data-i18n="writeups_title">Análisis de Intrusión</h2>
     <div class="section-divider"></div>
 
     <div class="writeups-container fade-in">
-      <p class="writeup-intro">
+      <p class="writeup-intro" data-i18n="writeup_intro">
         Documentación técnica detallada sobre la resolución de máquinas, 
         análisis de exploits y técnicas modernas de pentesting.
       </p>
@@ -1724,7 +1885,7 @@
           <div class="writeup-item-left">
             <div class="writeup-date">2024 - 2025</div>
             <div class="writeup-info">
-              <div class="writeup-name">Writeups Oficiales: BreakerFixer</div>
+              <div class="writeup-name" data-i18n="writeup_official">Writeups Oficiales: BreakerFixer</div>
               <div class="writeup-meta">HTB · THM · OSCP Style Labs · CVE Analysis</div>
             </div>
           </div>
@@ -1742,13 +1903,13 @@
 
   <!-- Contact -->
   <section id="contact">
-    <div class="section-label">Contact</div>
-    <h2 class="section-title">Contacto</h2>
+    <div class="section-label" data-i18n="contact_label">Contact</div>
+    <h2 class="section-title glitch-hover" data-i18n="contact_title">Contacto</h2>
     <div class="section-divider"></div>
 
     <div class="contact-inner">
       <div class="contact-text fade-in">
-        <p>
+        <p data-i18n="contact_p1">
           ¿Tienes un proyecto de seguridad en mente, quieres colaborar
           o simplemente conectar? Estoy abierto a oportunidades en pentesting,
           prácticas y proyectos de ciberseguridad.
@@ -1773,20 +1934,20 @@
       <div class="fade-in">
         <form class="contact-form" onsubmit="handleSubmit(event)">
           <div class="form-group">
-            <label class="form-label">Nombre</label>
-            <input type="text" name="name" class="form-input" placeholder="Tu nombre" required>
+            <label class="form-label" data-i18n="form_name">Nombre</label>
+            <input type="text" name="name" class="form-input" data-i18n-placeholder="form_name_placeholder" placeholder="Tu nombre" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-input" placeholder="tu@email.com" required>
+            <label class="form-label" data-i18n="form_email">Email</label>
+            <input type="email" name="email" class="form-input" data-i18n-placeholder="form_email_placeholder" placeholder="tu@email.com" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Mensaje</label>
-            <textarea name="message" class="form-textarea" placeholder="Cuéntame tu propuesta..." required></textarea>
+            <label class="form-label" data-i18n="form_msg">Mensaje</label>
+            <textarea name="message" class="form-textarea" data-i18n-placeholder="form_msg_placeholder" placeholder="Cuéntame tu propuesta..." required></textarea>
           </div>
           <button type="submit" class="btn btn-primary"
             style="cursor:none; border:none; width:100%; justify-content:center;">
-            <span>▸ Enviar mensaje</span>
+            <span data-i18n="form_submit">▸ Enviar mensaje</span>
           </button>
         </form>
       </div>
@@ -1795,16 +1956,222 @@
 
   <!-- Footer -->
   <footer>
-    <div class="footer-copy">
+    <div class="footer-copy" data-i18n="footer_copy">
       © 2025 <span>Kyrox</span> — Todos los derechos reservados
     </div>
     <div class="footer-status">
       <span class="status-dot"></span>
-      Disponible para proyectos
+      <span data-i18n="footer_status">Disponible para proyectos</span>
     </div>
   </footer>
 
+  <!-- Language Selector Modal -->
+  <div id="lang-modal">
+    <div class="lang-card">
+      <div class="lang-logo"></div>
+      <h2 class="lang-title">Welcome / Bienvenido</h2>
+      <p class="lang-subtitle">Choose your preferred language / Selecciona tu idioma</p>
+      <div class="lang-options">
+        <div class="lang-btn" onclick="selectLanguage('en')">
+          <span class="lang-flag">🇺🇸</span>
+          <span class="lang-name">English</span>
+        </div>
+        <div class="lang-btn" onclick="selectLanguage('es')">
+          <span class="lang-flag">🇪🇸</span>
+          <span class="lang-name">Español</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // ── Translation System ──
+    const translations = {
+      en: {
+        hero_tag: "Security Researcher · Ethical Hacker",
+        hero_subtitle: '<span class="highlight">Cybersecurity</span> & Arch Linux',
+        hero_cta_contact: "Contact Me",
+        hero_cta_explore: "Explore Docs",
+        about_label: "About me",
+        about_title: "About me",
+        about_p1: "I'm <strong>Kyrox</strong>, a cybersecurity enthusiast focused on ethical hacking and offensive security. Currently pursuing a <strong>Higher Degree in ASIR</strong> (Network Computer Systems Administration) while expanding my knowledge in pentesting and forensics.",
+        about_p2: "Certified with the <strong>eJPT (eLearnSecurity Junior Penetration Tester)</strong>, an accreditation that validates my skills in reconnaissance, vulnerability exploitation, and post-exploitation in real environments.",
+        about_p3: "My goal is to master every layer of systems, from the network to the application, to understand and neutralize threats before they occur.",
+        stat_cert: "eJPT Certification",
+        stat_asir: "Higher Degree Student",
+        stat_ctf: "Active Competitor",
+        stat_curiosity: "Technical Curiosity",
+        skills_label: "Skills",
+        skills_title: "Skills",
+        skill_recon_name: "Reconnaissance & OSINT",
+        skill_recon_desc: "Open source intelligence, massive enumeration, asset identification, and initial attack vectors.",
+        skill_expl_name: "Exploitation & Intrusion",
+        skill_expl_desc: "Exploitation of known vulnerabilities, Active Directory pentesting, and controlled intrusion techniques.",
+        skill_infra_name: "Infrastructure & Networking",
+        skill_infra_desc: "Corporate network security, pivoting, tunneling, traffic analysis, and hardening.",
+        skill_sys_name: "Systems & Infrastructure",
+        skill_sys_desc: "Advanced systems administration, secure infrastructure deployment, and service automation.",
+        tag_hardening: "Security Hardening",
+        skill_web_name: "Web Pentesting (OWASP)",
+        skill_web_desc: "Application auditing based on OWASP Top 10, business logic testing, and API security.",
+        skill_script_name: "Scripting & Automation",
+        skill_script_desc: "Development of custom security tools and automation of auditing tasks.",
+        tag_automation: "Automation",
+        certs_label: "Certifications",
+        certs_title: "Education",
+        cert_ejpt_issuer: "eLearnSecurity / INE · Certified",
+        cert_ejpt_desc: "Entry-level penetration testing certification validating practical skills in reconnaissance, network scanning, exploitation, and post-exploitation.",
+        cert_smr_name: "SMR — Microcomputer Systems and Networks",
+        cert_smr_issuer: "Middle Degree · Completed",
+        cert_smr_desc: "Technical foundation in hardware, equipment assembly, local networks, OS administration, and microcomputer services.",
+        cert_asir_name: "ASIR — Network Computer Systems Administration",
+        cert_asir_issuer: "Vocational Training · Ongoing",
+        cert_asir_desc: "Higher Degree in systems administration, networking, virtualization, security, and cloud services.",
+        cert_ctf_name: "CTF Player & Lab Practitioner",
+        cert_ctf_desc: "Active participation in practice platforms and global cybersecurity competitions.",
+        projects_label: "Projects",
+        projects_title: "Featured Projects",
+        project_live: "Live",
+        project_desc: "Platform dedicated to learning offensive cybersecurity. Includes detailed guides, practical challenges, and a community focused on mutual growth.",
+        project_link: "Visit official site ▸",
+        writeups_label: "Writeups",
+        writeups_title: "Intrusion Analysis",
+        writeup_intro: "Detailed technical documentation on machine resolution, exploit analysis, and modern pentesting techniques.",
+        writeup_official: "Official Writeups: BreakerFixer",
+        contact_label: "Contact",
+        contact_title: "Contact",
+        contact_p1: "Have a security project in mind, want to collaborate, or just connect? I'm open to opportunities in pentesting, internships, and cybersecurity projects.",
+        form_name: "Name",
+        form_name_placeholder: "Your name",
+        form_email: "Email",
+        form_email_placeholder: "your@email.com",
+        form_msg: "Message",
+        form_msg_placeholder: "Tell me about your proposal...",
+        form_submit: "▸ Send message",
+        footer_copy: "© 2025 <span>Kyrox</span> — All rights reserved",
+        footer_status: "Available for projects",
+        term_whoami: "kyrox (offensive security / pentesting)",
+        term_report: "report saved → ./report.txt",
+        term_access: "access granted"
+      },
+      es: {
+        hero_tag: "Security Researcher · Ethical Hacker",
+        hero_subtitle: '<span class="highlight">Ciberseguridad</span> & Arch Linux',
+        hero_cta_contact: "Contactar",
+        hero_cta_explore: "Explorar docs",
+        about_label: "About me",
+        about_title: "Sobre mí",
+        about_p1: "Soy <strong>Kyrox</strong>, un apasionado de la ciberseguridad con enfoque en el hacking ético y la seguridad ofensiva. Actualmente cursando el <strong>Grado Superior de ASIR</strong> (Administración de Sistemas Informáticos en Red) mientras amplío mis conocimientos en pentesting y análisis forense.",
+        about_p2: "Certificado con el <strong>eJPT (eLearnSecurity Junior Penetration Tester)</strong>, una acreditación que valida mis habilidades en reconocimiento, explotación de vulnerabilidades y post-explotación en entornos reales.",
+        about_p3: "Mi objetivo es dominar cada capa de los sistemas, desde la red hasta la aplicación, para comprender y neutralizar las amenazas antes de que ocurran.",
+        stat_cert: "Certificación eJPT",
+        stat_asir: "Grado Superior cursando",
+        stat_ctf: "Competidor activo",
+        stat_curiosity: "Curiosidad técnica",
+        skills_label: "Skills",
+        skills_title: "Habilidades",
+        skill_recon_name: "Reconocimiento & OSINT",
+        skill_recon_desc: "Inteligencia de fuentes abiertas, enumeración masiva, identificación de activos y vectores de ataque iniciales.",
+        skill_expl_name: "Explotación & Intrusión",
+        skill_expl_desc: "Explotación de vulnerabilidades conocidas, pentesting de Active Directory y técnicas de intrusión controlada.",
+        skill_infra_name: "Infraestructura & Redes",
+        skill_infra_desc: "Seguridad en redes corporativas, pivoting, túneles, análisis de tráfico y segmentación (Hardening).",
+        skill_sys_name: "Sistemas e Infraestructura",
+        skill_sys_desc: "Administración avanzada de sistemas, despliegue de infraestructura segura y automatización de servicios.",
+        tag_hardening: "Hardening de Sistemas",
+        skill_web_name: "Pentesting Web (OWASP)",
+        skill_web_desc: "Auditoría de aplicaciones basadas en el OWASP Top 10, pruebas de lógica de negocio y seguridad en APIs.",
+        skill_script_name: "Scripting & Automatización",
+        skill_script_desc: "Desarrollo de herramientas personalizadas de seguridad y automatización de tareas de auditoría.",
+        tag_automation: "Automatización",
+        certs_label: "Certifications",
+        certs_title: "Formación",
+        cert_ejpt_issuer: "eLearnSecurity / INE · Certificado",
+        cert_ejpt_desc: "Certificación de nivel de entrada en penetration testing que valida habilidades prácticas en reconocimiento, escaneo de redes, explotación de vulnerabilidades y post-explotación.",
+        cert_smr_name: "SMR — Sistemas Microinformáticos y Redes",
+        cert_smr_issuer: "Grado Medio · Completado",
+        cert_smr_desc: "Formación técnica base en hardware, montaje de equipos, redes locales, administración de sistemas operativos y servicios microinformáticos.",
+        cert_asir_name: "ASIR — Administración de Sistemas Informáticos en Red",
+        cert_asir_issuer: "Formación Profesional · En curso",
+        cert_asir_desc: "Grado Superior en administración de sistemas, redes, virtualización, seguridad y servicios en la nube.",
+        cert_ctf_name: "CTF Player & Lab Practitioner",
+        cert_ctf_desc: "Participación activa en plataformas de práctica y competiciones de ciberseguridad a nivel global.",
+        projects_label: "Projects",
+        projects_title: "Proyectos Destacados",
+        project_live: "Live",
+        project_desc: "Plataforma dedicada al aprendizaje de ciberseguridad ofensiva. Incluye guías detalladas, retos prácticos y una comunidad enfocada en el crecimiento mutuo en el sector.",
+        project_link: "Visitar sitio oficial ▸",
+        writeups_label: "Writeups",
+        writeups_title: "Análisis de Intrusión",
+        writeup_intro: "Documentación técnica detallada sobre la resolución de máquinas, análisis de exploits y técnicas modernas de pentesting.",
+        writeup_official: "Writeups Oficiales: BreakerFixer",
+        contact_label: "Contact",
+        contact_title: "Contacto",
+        contact_p1: "¿Tienes un proyecto de seguridad en mente, quieres colaborar o simplemente conectar? Estoy abierto a oportunidades en pentesting, prácticas y proyectos de ciberseguridad.",
+        form_name: "Nombre",
+        form_name_placeholder: "Tu nombre",
+        form_email: "Email",
+        form_email_placeholder: "tu@email.com",
+        form_msg: "Mensaje",
+        form_msg_placeholder: "Cuéntame tu propuesta...",
+        form_submit: "▸ Enviar mensaje",
+        footer_copy: "© 2025 <span>Kyrox</span> — Todos los derechos reservados",
+        footer_status: "Disponible para proyectos",
+        term_whoami: "kyrox (seguridad ofensiva / pentesting)",
+        term_report: "reporte guardado → ./report.txt",
+        term_access: "acceso concedido"
+      }
+    };
+
+    let currentLang = localStorage.getItem('kyrox-lang') || null;
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('kyrox-lang', lang);
+      
+      // Update text
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      // Update placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) {
+          el.setAttribute('placeholder', translations[lang][key]);
+        }
+      });
+
+      // Update document title if needed
+      document.title = lang === 'es' ? 'Kyrox — Investigador de Seguridad' : 'Kyrox — Security Researcher';
+
+      // Reset Terminal
+      li = 0; ci = 0; phase = 'cmd';
+      tbody.innerHTML = '';
+      nextLine();
+
+      // Close modal
+      document.getElementById('lang-modal').classList.remove('active');
+    }
+
+    function openLangModal() {
+      document.getElementById('lang-modal').classList.add('active');
+    }
+
+    window.selectLanguage = setLanguage;
+
+    // Wait for DOM to init language
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!currentLang) {
+        openLangModal();
+      } else {
+        setLanguage(currentLang);
+      }
+    });
+
     // ── Cursor ──
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursor-ring');
@@ -1822,11 +2189,11 @@
     });
 
     // ── Terminal Typewriter ──
-    const lines = [
+    const getLines = (lang) => [
       {
         type: 'prompt',
         cmd: 'whoami',
-        out: 'kyrox (offensive security / pentesting)',
+        out: translations[lang].term_whoami,
         outClass: 'ok'
       },
       {
@@ -1848,53 +2215,22 @@ Service Info: OS: Linux`,
       },
       {
         type: 'prompt',
-        cmd: 'gobuster dir -u https://breakerxfixer.online/ -w /usr/share/wordlists/dirb/common.txt',
-        out: `/admin               (Status: 301)
-/login               (Status: 200)
-/dashboard           (Status: 302)
-/uploads             (Status: 403)`,
-        outClass: 'ok'
-      },
-      {
-        type: 'prompt',
-        cmd: 'whatweb breakerxfixer.online',
-        out: `HTTPServer[nginx], IP[192.168.1.10], Title[Login Panel],
-PHP[8.2], Cookies[PHPSESSID]`,
-        outClass: 'ok'
-      },
-      {
-        type: 'prompt',
-        cmd: 'wpscan --url https://breakerxfixer.online/ --enumerate u',
-        out: `[+] Found 2 users:
- - admin
- - testuser`,
-        outClass: 'warn'
-      },
-      {
-        type: 'prompt',
-        cmd: 'sqlmap -u "https://breakerxfixer.online/login?id=1" --batch --dbs',
-        clear: true,
-        out: `[INFO] available databases:
-[*] users
-[*] information_schema`,
-        outClass: 'err'
-      },
-      {
-        type: 'prompt',
-        cmd: 'echo "access granted" > report.txt',
-        out: 'report saved → ./report.txt',
+        cmd: 'echo "' + translations[lang].term_access + '" > report.txt',
+        out: translations[lang].term_report,
         outClass: 'ok'
       }
     ];
 
+    let terminalLines = [];
     const tbody = document.getElementById('terminal-body');
     let li = 0, ci = 0, phase = 'cmd'; // phase: cmd | out
     let currentLine = null;
     let promptEl = null, cmdEl = null, outEl = null;
 
     function nextLine() {
-      if (li >= lines.length) return;
-      const line = lines[li];
+      terminalLines = getLines(currentLang || 'en');
+      if (li >= terminalLines.length) return;
+      const line = terminalLines[li];
 
       if (line.clear) {
         tbody.innerHTML = '';
@@ -1919,7 +2255,7 @@ PHP[8.2], Cookies[PHPSESSID]`,
     }
 
     function typeChar() {
-      const line = lines[li];
+      const line = terminalLines[li];
       if (phase === 'cmd') {
         if (ci < line.cmd.length) {
           cmdEl.textContent += line.cmd[ci++];
@@ -1932,7 +2268,7 @@ PHP[8.2], Cookies[PHPSESSID]`,
     }
 
     function showOut() {
-      const line = lines[li];
+      const line = terminalLines[li];
       const outLines = line.out.split('\n');
       outLines.forEach(ol => {
         const d = document.createElement('div');
@@ -1942,7 +2278,7 @@ PHP[8.2], Cookies[PHPSESSID]`,
       });
       tbody.scrollTop = tbody.scrollHeight;
       li++;
-      if (li < lines.length) {
+      if (li < terminalLines.length) {
         setTimeout(nextLine, 800 + Math.random() * 600);
       } else {
         // Loop
