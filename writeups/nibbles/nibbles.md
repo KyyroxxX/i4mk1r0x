@@ -38,9 +38,6 @@ Get user and root flags.
 
 ![](./Pasted%20image%2020260416173907.png)
 
-```bash
-nmap -sC -sV -oN nmap.txt 10.129.96.84
-```
 
 **Results:**
 
