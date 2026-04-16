@@ -2706,46 +2706,49 @@
       if (isTerminalTyping) return;
       isTerminalTyping = true;
       
-      terminalBody.innerHTML = '';
-      for (const line of terminalLines) {
-        if (line.type === "clear") {
-          await new Promise(r => setTimeout(r, 1000));
-          terminalBody.innerHTML = '';
-          continue;
-        }
-
-        const div = document.createElement('div');
-        div.className = `t-line ${line.color || ''}`;
-        terminalBody.appendChild(div);
-        
-        if (line.type === "cmd") {
-          const prefix = document.createElement('span');
-          prefix.className = 't-prompt';
-          prefix.innerHTML = createPromptHTML();
-          div.appendChild(prefix);
-
-          const textSpan = document.createElement('span');
-          div.appendChild(textSpan);
-          
-          for (let char of line.text) {
-            textSpan.innerText += char;
-            await new Promise(r => setTimeout(r, 70));
+      while (true) {
+        terminalBody.innerHTML = '';
+        for (const line of terminalLines) {
+          if (line.type === "clear") {
+            await new Promise(r => setTimeout(r, 1000));
+            terminalBody.innerHTML = '';
+            continue;
           }
-        } else {
-          const textSpan = document.createElement('span');
-          div.appendChild(textSpan);
-          textSpan.innerText = line.text;
-          await new Promise(r => setTimeout(r, 50));
-        }
-        
-        await new Promise(r => setTimeout(r, 600));
-        terminalBody.scrollTop = terminalBody.scrollHeight;
-      }
 
-      const cursorLine = document.createElement('div');
-      cursorLine.innerHTML = `<span class="t-prompt">${createPromptHTML()}</span><span class="cursor-blink"></span>`;
-      terminalBody.appendChild(cursorLine);
-      isTerminalTyping = false;
+          const div = document.createElement('div');
+          div.className = `t-line ${line.color || ''}`;
+          terminalBody.appendChild(div);
+          
+          if (line.type === "cmd") {
+            const prefix = document.createElement('span');
+            prefix.className = 't-prompt';
+            prefix.innerHTML = createPromptHTML();
+            div.appendChild(prefix);
+
+            const textSpan = document.createElement('span');
+            div.appendChild(textSpan);
+            
+            for (let char of line.text) {
+              textSpan.innerText += char;
+              await new Promise(r => setTimeout(r, 70));
+            }
+          } else {
+            const textSpan = document.createElement('span');
+            div.appendChild(textSpan);
+            textSpan.innerText = line.text;
+            await new Promise(r => setTimeout(r, 50));
+          }
+          
+          await new Promise(r => setTimeout(r, 600));
+          terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        const cursorLine = document.createElement('div');
+        cursorLine.innerHTML = `<span class="t-prompt">${createPromptHTML()}</span><span class="cursor-blink"></span>`;
+        terminalBody.appendChild(cursorLine);
+        
+        await new Promise(r => setTimeout(r, 3000)); // Pause at the end before looping
+      }
     }
 
     // Terminal Init
