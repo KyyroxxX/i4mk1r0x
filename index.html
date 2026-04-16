@@ -142,6 +142,95 @@
       box-shadow: 0 0 10px var(--accent-mauve);
     }
 
+    /* ── Education List Style (Matching Writeups) ── */
+    .edu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .edu-item {
+      background: rgba(30, 30, 46, 0.4);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .edu-item:hover {
+      border-color: var(--accent);
+      background: rgba(49, 50, 68, 0.3);
+      transform: translateX(12px);
+      box-shadow: -5px 0 15px rgba(203, 166, 247, 0.1);
+    }
+
+    .edu-item-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .edu-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: rgba(203, 166, 247, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      border: 1px solid rgba(203, 166, 247, 0.2);
+    }
+
+    .edu-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .edu-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .edu-issuer {
+      font-size: 0.85rem;
+      color: var(--accent-mauve);
+      margin-top: 0.2rem;
+    }
+
+    .edu-desc {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+      max-width: 600px;
+    }
+
+    .edu-badge {
+      font-size: 1.5rem;
+      color: var(--accent-pink);
+    }
+
+    @media (max-width: 768px) {
+      .edu-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+        gap: 1rem;
+      }
+      .edu-item-left {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: flex-start;
+      }
+    }
+
     .sys-monitor {
       display: flex;
       gap: 1.2rem;
@@ -1775,72 +1864,62 @@
 
     /* ── Responsive Polish ── */
 
-    /* ── Consolidated Responsive System ── */
-
-    /* Desktop (Default) */
-    .stats-grid { grid-template-columns: repeat(4, 1fr); }
-    .machines-grid { grid-template-columns: repeat(3, 1fr); }
-    .skills-grid { grid-template-columns: repeat(3, 1fr); }
-    .certs-grid { grid-template-columns: repeat(2, 1fr); }
-    .projects-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-
-    /* Laptops & Tablets (1100px) */
-    @media (max-width: 1100px) {
-      .hero-content { scale: 0.9; }
-      .terminal { position: relative; inset: auto; transform: none; margin: 3rem auto 0; width: 90%; max-width: 500px; }
-      .desktop-widgets { position: static; display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; }
-      .widget-clock, .widget-music { position: static; transform: none; scale: 1; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .machines-grid { grid-template-columns: repeat(2, 1fr); }
-      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    /* ── Footer Polish ── */
+    footer {
+      padding: 4rem 2rem;
+      background: var(--bg-crust);
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
     }
 
-    /* Mobile (768px) */
-    @media (max-width: 768px) {
-      section { padding: 4rem 1.5rem; }
-      .polybar .bar-center, .polybar .bar-right .tray-icon, .sys-monitor { display: none; }
-      .section-title { font-size: 2.2rem; }
-      .skills-grid, .machines-grid, .certs-grid, .stats-grid, .projects-grid { 
-        grid-template-columns: 1fr !important; 
-        gap: 1.5rem;
-      }
-      .cert-card.featured { grid-column: span 1; }
-      .cert-card { flex-direction: column; text-align: center; }
-      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-copy {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      opacity: 0.8;
     }
 
-    /* Phones (480px) */
-    @media (max-width: 480px) {
-      .hero-name { font-size: 2.5rem !important; }
-      .hero-ctas { flex-direction: column; width: 100%; }
-      .btn { width: 100%; justify-content: center; }
-      .stats-grid { grid-template-columns: 1fr; }
+    .footer-copy span {
+      color: var(--accent);
+      font-weight: 600;
     }
 
-
-    .wheel {
-      width: 3px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 2px;
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: scroll-wheel 2s infinite;
+    .footer-status {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      padding: 0.6rem 1.2rem;
+      background: rgba(203, 166, 247, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      transition: all 0.3s ease;
     }
 
-    @keyframes scroll-wheel {
-      0% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
+    .footer-status:hover {
+      border-color: var(--accent);
+      background: rgba(203, 166, 247, 0.1);
+      transform: translateY(-2px);
+    }
 
-      100% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(12px);
-      }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0% { box-shadow: 0 0 0 0 rgba(166, 227, 161, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(166, 227, 161, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(166, 227, 161, 0); }
     }
   </style>
 </head>
@@ -1923,9 +2002,9 @@
           <div class="v-bar"></div>
         </div>
         <div class="music-controls">
-          <span onclick="prevTrack()">󰒮</span>
-          <span class="play-btn" id="play-btn" onclick="togglePlay()">󰐊</span>
-          <span onclick="nextTrack()">󰒭</span>
+          <span onclick="prevTrack()"><i class="fa-solid fa-backward-step"></i></span>
+          <span class="play-btn" id="play-btn" onclick="togglePlay()"><i class="fa-solid fa-play"></i></span>
+          <span onclick="nextTrack()"><i class="fa-solid fa-forward-step"></i></span>
         </div>
       </div>
       <!-- Hidden YT Player -->
@@ -2113,51 +2192,61 @@
     <h2 class="section-title glitch-hover" data-i18n="certs_title">Formación</h2>
     <div class="section-divider"></div>
 
-    <div class="certs-grid">
-      <div class="cert-card featured fade-in">
-        <div class="cert-badge"><i class="fa-solid fa-shield-halved"></i></div>
-        <div class="cert-info">
-          <div class="cert-name">eJPT — eLearnSecurity Junior Penetration Tester</div>
-          <div class="cert-issuer" data-i18n="cert_ejpt_issuer">eLearnSecurity / INE · Certificado</div>
-          <div class="cert-desc" data-i18n="cert_ejpt_desc">
-            Certificación de nivel de entrada en penetration testing que valida habilidades prácticas
-            en reconocimiento, escaneo de redes, explotación de vulnerabilidades y
-            post-explotación. Evaluación 100% práctica en entorno de laboratorio real.
+    <div class="edu-list">
+      <div class="edu-item fade-in">
+        <div class="edu-item-left">
+          <div class="edu-date">2023 - 2024</div>
+          <div class="edu-info">
+            <div class="edu-name">eJPT — eLearnSecurity Junior Penetration Tester</div>
+            <div class="edu-issuer" data-i18n="cert_ejpt_issuer">eLearnSecurity / INE · Certified</div>
+            <div class="edu-desc" data-i18n="cert_ejpt_desc">
+              Entry-level penetration testing certification validating practical skills in reconnaissance, network scanning, exploitation, and post-exploitation.
+            </div>
           </div>
         </div>
+        <div class="edu-badge"><i class="fa-solid fa-shield-halved"></i></div>
       </div>
-      <div class="cert-card fade-in">
-        <div class="cert-badge"><i class="fa-solid fa-microchip"></i></div>
-        <div class="cert-info">
-          <div class="cert-name" data-i18n="cert_smr_name">SMR — Sistemas Microinformáticos y Redes</div>
-          <div class="cert-issuer" data-i18n="cert_smr_issuer">Grado Medio · Completado</div>
-          <div class="cert-desc" data-i18n="cert_smr_desc">
-            Formación técnica base en hardware, montaje de equipos, redes locales,
-            administración de sistemas operativos y servicios microinformáticos.
+
+      <div class="edu-item fade-in">
+        <div class="edu-item-left">
+          <div class="edu-date">2022 - 2024</div>
+          <div class="edu-info">
+            <div class="edu-name" data-i18n="cert_smr_name">SMR — Sistemas Microinformáticos y Redes</div>
+            <div class="edu-issuer" data-i18n="cert_smr_issuer">Grado Medio · Completado</div>
+            <div class="edu-desc" data-i18n="cert_smr_desc">
+              Base técnica en hardware, redes y administración de sistemas.
+            </div>
           </div>
         </div>
+        <div class="edu-badge"><i class="fa-solid fa-microchip"></i></div>
       </div>
-      <div class="cert-card fade-in">
-        <div class="cert-badge"><i class="fa-solid fa-graduation-cap"></i></div>
-        <div class="cert-info">
-          <div class="cert-name" data-i18n="cert_asir_name">ASIR — Administración de Sistemas Informáticos en Red</div>
-          <div class="cert-issuer" data-i18n="cert_asir_issuer">Formación Profesional · En curso</div>
-          <div class="cert-desc" data-i18n="cert_asir_desc">
-            Grado Superior en administración de sistemas, redes, virtualización,
-            seguridad y servicios en la nube.
+
+      <div class="edu-item fade-in">
+        <div class="edu-item-left">
+          <div class="edu-date">2024 - 2026</div>
+          <div class="edu-info">
+            <div class="edu-name" data-i18n="cert_asir_name">ASIR — Administración de Sistemas Informáticos en Red</div>
+            <div class="edu-issuer" data-i18n="cert_asir_issuer">Formación Profesional · En curso</div>
+            <div class="edu-desc" data-i18n="cert_asir_desc">
+              Especialización en administración de redes, seguridad y servicios cloud.
+            </div>
           </div>
         </div>
+        <div class="edu-badge"><i class="fa-solid fa-graduation-cap"></i></div>
       </div>
-      <div class="cert-card featured reveal">
-        <div class="cert-badge"><i class="fa-solid fa-skull-crossbones"></i></div>
-        <div class="cert-info">
-          <div class="cert-name" data-i18n="cert_ctf_name">CTF Player & Lab Practitioner</div>
-          <div class="cert-issuer">HackTheBox · TryHackMe · PicoCTF</div>
-          <div class="cert-desc" data-i18n="cert_ctf_desc">
-            Participación activa en plataformas de práctica y competiciones
-            de ciberseguridad a nivel global.
+
+      <div class="edu-item fade-in">
+        <div class="edu-item-left">
+          <div class="edu-date">2023 - actualidad</div>
+          <div class="edu-info">
+            <div class="edu-name" data-i18n="cert_ctf_name">CTF Player & Lab Practitioner</div>
+            <div class="edu-issuer">HackTheBox · TryHackMe · PicoCTF</div>
+            <div class="edu-desc" data-i18n="cert_ctf_desc">
+              Participación activa en laboratorios competitivos a nivel global.
+            </div>
           </div>
         </div>
+        <div class="edu-badge"><i class="fa-solid fa-skull-crossbones"></i></div>
       </div>
     </div>
   </section>
@@ -2252,17 +2341,17 @@
         </p>
         <div class="contact-links">
           <a href="https://github.com/KyyroxxX" target="_blank" class="contact-link">
-            <span class="link-icon">⌥</span> github.com/KyyroxxX
+            <span class="link-icon"><i class="fa-brands fa-github"></i></span> github.com/KyyroxxX
           </a>
           <a href="https://www.linkedin.com/in/alejandro-de-luque-113530374" target="_blank" class="contact-link">
-            <span class="link-icon"></span> alejandro-de-luque
+            <span class="link-icon"><i class="fa-brands fa-linkedin"></i></span> alejandro-de-luque
           </a>
           <a href="https://profile.hackthebox.com/profile/019d91a5-6a74-7369-8308-b96073c3ff3f" target="_blank"
             class="contact-link">
-            <span class="link-icon">◈</span> hackthebox.eu/kyrox
+            <span class="link-icon"><i class="fa-solid fa-bolt"></i></span> hackthebox.eu/kyrox
           </a>
           <a href="mailto:k1r0xh4ck1ng@proton.me" class="contact-link">
-            <span class="link-icon">✉</span> k1r0xh4ck1ng@proton.me
+            <span class="link-icon"><i class="fa-solid fa-envelope"></i></span> k1r0xh4ck1ng@proton.me
           </a>
         </div>
       </div>
@@ -2564,13 +2653,18 @@
     // ── Terminal Typing Engine ──
     const terminalBody = document.getElementById('terminal-body');
     const terminalLines = [
-      { text: "Initializing Kyrox OS...", color: "t-ok" },
-      { text: "Loading core modules...", color: "t-cmd" },
-      { text: "Kernel: Arch Linux x86_64", color: "t-warn" },
-      { text: "Uptime: 24 days, 13 hours", color: "t-out" },
-      { text: "Memory: 162.4 MB / 64.0 GB (0%)", color: "t-out" },
-      { text: "Access: Granting entry as root...", color: "t-ok" },
-      { text: "Welcome back, Alejandro.", color: "accent" }
+      { text: "nmap -sC -sV breakerxfixer.online", color: "t-cmd" },
+      { text: "Starting Nmap 7.94 ( https://nmap.org ) ...", color: "t-out" },
+      { text: "Nmap scan report for breakerxfixer.online (104.21.78.156)", color: "t-ok" },
+      { text: "PORT   STATE SERVICE VERSION", color: "t-out" },
+      { text: "80/tcp  open  http    Cloudflare http proxy", color: "t-warn" },
+      { text: "443/tcp open  https   Cloudflare http proxy", color: "t-warn" },
+      { text: "Enumerating directories with gobuster...", color: "t-cmd" },
+      { text: "Found: /admin (Status: 200) [Size: 1542]", color: "t-ok" },
+      { text: "Attempting exploit: custom/breakerfixer_auth_bypass...", color: "t-warn" },
+      { text: "[+] EXPLOIT SUCCESSFUL. SHELL GRANTED.", color: "t-ok" },
+      { text: "kyrox@breakerfixer:~$ whoami", color: "t-cmd" },
+      { text: "root", color: "t-ok" }
     ];
 
     async function typeTerminal() {
@@ -2743,11 +2837,11 @@
 
       if (event.data == YT.PlayerState.PLAYING) {
         isPlaying = true;
-        playBtn.textContent = '󰏤'; // Pause icon
+        playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         visualizer.classList.add('playing');
       } else {
         isPlaying = false;
-        playBtn.textContent = '󰐊'; // Play icon
+        playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
         visualizer.classList.remove('playing');
       }
     }
