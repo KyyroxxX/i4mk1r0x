@@ -1051,6 +1051,28 @@
     }
 
     .t-prompt {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      margin-right: 0.8rem;
+    }
+
+    .p-arch {
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .p-home {
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .p-arrow {
       color: var(--accent-green);
     }
 
@@ -2650,32 +2672,39 @@
     // ── Terminal Typing Engine ──
     const terminalBody = document.getElementById('terminal-body');
     const terminalLines = [
-      { type: "cmd", text: "nmap -sC -sV breakerxfixer.online" },
-      { type: "out", text: "Starting Nmap 7.94 ( https://nmap.org ) ...", color: "t-dim" },
-      { type: "out", text: "Nmap scan report for breakerxfixer.online (104.21.78.156)", color: "t-ok" },
-      { type: "out", text: "PORT      STATE SERVICE  VERSION", color: "t-dim" },
-      { type: "out", text: "80/tcp    open  http     Cloudflare http proxy", color: "t-warn" },
-      { type: "out", text: "443/tcp   open  https    Cloudflare http proxy", color: "t-warn" },
+      { type: "cmd", text: "nmap -p22,80 -sCV -n -Pn 10.129.96.84 -oN targeted" },
+      { type: "out", text: "Starting Nmap 7.99 ( https://nmap.org ) at 2026-04-16 18:11 +0200", color: "t-dim" },
+      { type: "out", text: "Nmap scan report for 10.129.96.84", color: "t-ok" },
+      { type: "out", text: "Host is up (0.045s latency).", color: "t-dim" },
+      { type: "out", text: "PORT   STATE SERVICE VERSION", color: "t-dim" },
+      { type: "out", text: "22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.5", color: "t-warn" },
+      { type: "out", text: "80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))", color: "t-warn" },
       { type: "clear" },
-      { type: "cmd", text: "gobuster dir -u https://breakerxfixer.online -w common.txt" },
+      { type: "cmd", text: "gobuster dir -u http://10.129.96.84 -w /usr/share/wordlists/common.txt" },
+      { type: "out", text: "===============================================================", color: "t-dim" },
       { type: "out", text: "Found: /admin (Status: 200) [Size: 1542]", color: "t-ok" },
-      { type: "out", text: "Found: /login (Status: 200) [Size: 840]", color: "t-ok" },
+      { type: "out", text: "Found: /uploads (Status: 301) [Size: 315] -> http://10.129.96.84/uploads/", color: "t-ok" },
       { type: "clear" },
-      { type: "cmd", text: "searchsploit breakerfixer" },
-      { type: "out", text: "Exploit Title                   |  Path", color: "t-dim" },
-      { type: "out", text: "--------------------------------|-----------------", color: "t-dim" },
-      { type: "out", text: "BreakerFixer Auth Bypass       |  custom/bf_bypass.py", color: "t-ok" },
-      { type: "cmd", text: "python3 bf_bypass.py" },
-      { type: "out", text: "[+] Exploit successful. Accessing shell...", color: "t-ok" },
-      { type: "out", text: "kyrox@breakerfixer:~$ whoami", color: "t-cmd" },
+      { type: "cmd", text: "python3 exploit.py http://10.129.96.84/admin --lhost 10.10.14.5" },
+      { type: "out", text: "[*] Attempting authentication bypass...", color: "t-dim" },
+      { type: "out", text: "[+] Exploit SUCCESS. Spawning reverse shell...", color: "t-ok" },
+      { type: "out", text: "kyrox@archbox:~$ whoami", color: "t-cmd" },
       { type: "out", text: "root", color: "t-ok" }
     ];
+
+    function createPromptHTML() {
+      return `
+        <span class="p-arch"><i class="fa-solid fa-terminal"></i> k1r0x</span>
+        <span class="p-home"><i class="fa-solid fa-house"></i> ~</span>
+        <span class="p-arrow"></span>
+      `;
+    }
 
     async function typeTerminal() {
       terminalBody.innerHTML = '';
       for (const line of terminalLines) {
         if (line.type === "clear") {
-          await new Promise(r => setTimeout(r, 600));
+          await new Promise(r => setTimeout(r, 800));
           terminalBody.innerHTML = '';
           continue;
         }
@@ -2687,7 +2716,7 @@
         if (line.type === "cmd") {
           const prefix = document.createElement('span');
           prefix.className = 't-prompt';
-          prefix.innerText = '➜ ~ ';
+          prefix.innerHTML = createPromptHTML();
           div.appendChild(prefix);
         }
 
@@ -2697,17 +2726,17 @@
         if (line.type === "cmd") {
           for (let char of line.text) {
             textSpan.innerText += char;
-            await new Promise(r => setTimeout(r, 40));
+            await new Promise(r => setTimeout(r, 70)); // Slower typing
           }
         } else {
           textSpan.innerText = line.text;
-          await new Promise(r => setTimeout(r, 50));
+          await new Promise(r => setTimeout(r, 30));
         }
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, 400)); // Pause after line
         terminalBody.scrollTop = terminalBody.scrollHeight;
       }
       const cursorLine = document.createElement('div');
-      cursorLine.innerHTML = `<span class="t-prompt">➜ ~ </span><span class="cursor-blink"></span>`;
+      cursorLine.innerHTML = `<span class="t-prompt">${createPromptHTML()}</span><span class="cursor-blink"></span>`;
       terminalBody.appendChild(cursorLine);
     }
 
