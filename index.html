@@ -819,21 +819,21 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: 0.7fr 1.3fr;
-      gap: 4rem;
-      align-items: center;
+      grid-template-columns: 0.6fr 1.4fr;
+      gap: 3rem;
+      align-items: flex-start;
+      margin-bottom: 3rem;
     }
 
     .profile-pic-container {
       position: relative;
       width: 100%;
-      max-width: 280px;
-      margin: 0 auto;
+      max-width: 260px;
     }
 
     .profile-pic-wrapper {
       position: relative;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1;
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--accent);
@@ -876,22 +876,11 @@
       transform: scale(1.1);
     }
 
-    .about-text p {
-      font-size: 1.1rem;
-      color: var(--text);
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-    }
-
-    .about-text p strong {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
     .stats-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      width: 100%;
     }
 
     .stat-card {
@@ -900,6 +889,10 @@
       border-radius: var(--radius);
       padding: 1.5rem;
       transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 120px;
     }
 
     .stat-card:hover {
@@ -1730,7 +1723,6 @@
       <div class="profile-pic-container fade-in">
         <div class="profile-pic-wrapper">
           <img src="assets/profile.jpg" alt="Alejandro De Luque" class="profile-pic">
-          <div class="profile-glow"></div>
         </div>
       </div>
       <div class="about-text fade-in">
@@ -1750,24 +1742,25 @@
           aplicación, para comprender y neutralizar las amenazas antes de que ocurran.
         </p>
       </div>
+    </div>
 
-      <div class="stats-grid fade-in">
-        <div class="stat-card">
-          <div class="stat-num">1</div>
-          <div class="stat-label" data-i18n="stat_cert">Certificación eJPT</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">ASIR</div>
-          <div class="stat-label" data-i18n="stat_asir">Grado Superior cursando</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">CTF</div>
-          <div class="stat-label" data-i18n="stat_ctf">Competidor activo</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">∞</div>
-          <div class="stat-label" data-i18n="stat_curiosity">Curiosidad técnica</div>
-        </div>
+    <!-- Stats pushed to occupy full width under the text area -->
+    <div class="stats-grid fade-in">
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label" data-i18n="stat_cert">Certificación eJPT</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">ASIR</div>
+        <div class="stat-label" data-i18n="stat_asir">Grado Superior cursando</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">CTF</div>
+        <div class="stat-label" data-i18n="stat_ctf">Competidor activo</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label" data-i18n="stat_curiosity">Curiosidad técnica</div>
       </div>
     </div>
   </section>
