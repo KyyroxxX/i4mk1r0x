@@ -1074,6 +1074,7 @@
 
     .p-arrow {
       color: var(--accent-green);
+      font-size: 0.8rem;
     }
 
     .t-cmd {
@@ -2696,15 +2697,19 @@
       return `
         <span class="p-arch"><i class="fa-solid fa-terminal"></i> k1r0x</span>
         <span class="p-home"><i class="fa-solid fa-house"></i> ~</span>
-        <span class="p-arrow"></span>
+        <span class="p-arrow"><i class="fa-solid fa-angles-right"></i></span>
       `;
     }
 
+    let isTerminalTyping = false;
     async function typeTerminal() {
+      if (isTerminalTyping) return;
+      isTerminalTyping = true;
+      
       terminalBody.innerHTML = '';
       for (const line of terminalLines) {
         if (line.type === "clear") {
-          await new Promise(r => setTimeout(r, 800));
+          await new Promise(r => setTimeout(r, 1000));
           terminalBody.innerHTML = '';
           continue;
         }
@@ -2718,26 +2723,29 @@
           prefix.className = 't-prompt';
           prefix.innerHTML = createPromptHTML();
           div.appendChild(prefix);
-        }
 
-        const textSpan = document.createElement('span');
-        div.appendChild(textSpan);
-        
-        if (line.type === "cmd") {
+          const textSpan = document.createElement('span');
+          div.appendChild(textSpan);
+          
           for (let char of line.text) {
             textSpan.innerText += char;
-            await new Promise(r => setTimeout(r, 70)); // Slower typing
+            await new Promise(r => setTimeout(r, 70));
           }
         } else {
+          const textSpan = document.createElement('span');
+          div.appendChild(textSpan);
           textSpan.innerText = line.text;
-          await new Promise(r => setTimeout(r, 30));
+          await new Promise(r => setTimeout(r, 50));
         }
-        await new Promise(r => setTimeout(r, 400)); // Pause after line
+        
+        await new Promise(r => setTimeout(r, 600));
         terminalBody.scrollTop = terminalBody.scrollHeight;
       }
+
       const cursorLine = document.createElement('div');
       cursorLine.innerHTML = `<span class="t-prompt">${createPromptHTML()}</span><span class="cursor-blink"></span>`;
       terminalBody.appendChild(cursorLine);
+      isTerminalTyping = false;
     }
 
     // Terminal Init
