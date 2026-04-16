@@ -1681,6 +1681,58 @@
       transform: none;
     }
 
+    /* ── Scroll Indicator ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      opacity: 0.6;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .scroll-indicator:hover {
+      opacity: 1;
+      color: var(--accent);
+      transform: translate(-50%, -5px);
+    }
+
+    .mouse {
+      width: 22px;
+      height: 36px;
+      border: 2px solid var(--text-dim);
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .wheel {
+      width: 3px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 2px;
+      position: absolute;
+      left: 50%;
+      top: 20%;
+      transform: translateX(-50%);
+      animation: mouse-scroll 1.6s infinite ease-in-out;
+    }
+
+    @keyframes mouse-scroll {
+      0% { transform: translate(-50%, 0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translate(-50%, 15px); opacity: 0; }
+    }
+
     /* ── Responsive Polish ── */
 
     /* ── Consolidated Responsive System ── */
@@ -1865,7 +1917,7 @@
       <div class="mouse">
         <div class="wheel"></div>
       </div>
-      <span>SCROLL</span>
+      <span data-i18n="scroll_text">SCROLL</span>
     </a>
   </section>
 
@@ -2273,6 +2325,7 @@
         machines_title: "Solved Machines",
         machines_note: "* Please note that all writeups are entirely in English.",
         read_writeup: "READ WRITEUP",
+        scroll_text: "SCROLL",
         projects_label: "Projects",
         projects_title: "Featured Projects",
         project_live: "Live",
@@ -2346,6 +2399,7 @@
         machines_title: "Máquinas Resueltas",
         machines_note: "* Ten en cuenta que todos los writeups se encuentran íntegramente en inglés.",
         read_writeup: "LEER WRITEUP",
+        scroll_text: "BAJAR",
         projects_label: "Projects",
         projects_title: "Proyectos Destacados",
         project_live: "Live",
