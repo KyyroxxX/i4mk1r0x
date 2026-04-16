@@ -25,7 +25,7 @@ Get user and root flags.
 
 ### 🔹 Host Discovery
 
-![]('./Pasted%20image%2020260416173536.png')
+![](./Pasted%20image%2020260416173536.png)
 
 - Host is up
     
@@ -36,7 +36,7 @@ Get user and root flags.
 
 ### 🔹 Nmap Scan
 
-![]('./Pasted%20image%2020260416173907.png')
+![](./Pasted%20image%2020260416173907.png)
 
 ```bash
 nmap -sC -sV -oN nmap.txt 10.129.96.84
@@ -55,7 +55,7 @@ nmap -sC -sV -oN nmap.txt 10.129.96.84
 
 ### 🔹 Service Enumeration
 
-![]('./Pasted%20image%2020260416174243.png')
+![](./Pasted%20image%2020260416174243.png)
 
 - Apache running on port 80
     
@@ -71,7 +71,7 @@ nmap -sC -sV -oN nmap.txt 10.129.96.84
 - [http://nibbles.htb](http://nibbles.htb/)
     
 
-![]('./Pasted%20image%2020260416174426.png')
+![](./Pasted%20image%2020260416174426.png)
 
 - Nothing interesting at first glance (classic HTB moment)
     
@@ -80,7 +80,7 @@ nmap -sC -sV -oN nmap.txt 10.129.96.84
 
 ### 🔹 Directory Fuzzing
 
-![]('./Pasted%20image%2020260416175302.png')
+![](./Pasted%20image%2020260416175302.png)
 
 - No useful results → time to think, not just fuzz
     
@@ -94,11 +94,11 @@ Found reference to:
 - `/nibbleblog`
     
 
-![]('./Pasted%20image%2020260416175515.png')
+![](./Pasted%20image%2020260416175515.png)
 
 👉 That’s more like it
 
-![]('./Pasted%20image%2020260416175702.png')
+![](./Pasted%20image%2020260416175702.png)
 
 - Blog application detected
     
@@ -107,7 +107,7 @@ Found reference to:
 
 ### 🔹 Further Enumeration
 
-![]('./Pasted%20image%2020260416180648.png')
+![](./Pasted%20image%2020260416180648.png)
 
 Interesting directories:
 
@@ -122,7 +122,7 @@ Interesting directories:
 
 ### 🔹 Version Disclosure
 
-![]('./Pasted%20image%2020260416180752.png')
+![](./Pasted%20image%2020260416180752.png)
 
 - Nibbleblog v4.0.3 (2014)
     
@@ -134,7 +134,7 @@ Interesting directories:
 
 ### 🔹 Admin Panel
 
-![]('./Pasted%20image%2020260416185820.png')
+![](./Pasted%20image%2020260416185820.png)
 
 - Login panel found
     
@@ -145,7 +145,7 @@ Interesting directories:
 
 ### 🔹 User Enumeration
 
-![]('./Pasted%20image%2020260416191909.png')
+![](./Pasted%20image%2020260416191909.png)
 
 - Found `users.xml`
     
@@ -183,7 +183,7 @@ Interesting directories:
 2. Access admin panel
     
 
-![]('./Pasted%20image%2020260416192120.png')
+![](./Pasted%20image%2020260416192120.png)
 
 👉 We are in. Time to break things.
 
@@ -192,7 +192,7 @@ Interesting directories:
     - Plugins → My Image
         
 
-![]('./Pasted%20image%2020260416192153.png')
+![](./Pasted%20image%2020260416192153.png)
 
 👉 Upload functionality detected = 🚨
 
@@ -208,7 +208,7 @@ Tested upload → accepts PHP
 
 👉 “megumi.php” totally legit image btw 😏
 
-![]('./Pasted%20image%2020260416193035.png')
+![](./Pasted%20image%2020260416193035.png)
 
 ---
 
@@ -224,18 +224,18 @@ Upgrade to reverse shell:
 nc -lvnp 4444
 ```
 
-![]('./Pasted%20image%2020260416193107.png')
+![](./Pasted%20image%2020260416193107.png)
 
 Payload executed → shell received
 
-![]('./Pasted%20image%2020260416193826.png')
+![](./Pasted%20image%2020260416193826.png)
 
 👉 We are in.
 
 - Retrieved `user.txt`
     
 
-![]('./Pasted%20image%2020260416194429.png')
+![](./Pasted%20image%2020260416194429.png)
 
 ---
 
@@ -243,7 +243,7 @@ Payload executed → shell received
 
 ### 🔹 Enumeration
 
-![]('./Pasted%20image%2020260416194728.png')
+![](./Pasted%20image%2020260416194728.png)
 
 - Found interesting script:
     
@@ -256,7 +256,7 @@ Payload executed → shell received
 
 ### 🔹 Exploit
 
-![]('./Pasted%20image%2020260416195428.png')
+![](./Pasted%20image%2020260416195428.png)
 
 - Script executable with sudo
     
@@ -281,7 +281,7 @@ Steps:
 
 👉 Classic sudo misconfiguration abuse
 
-![]('./Pasted%20image%2020260416195631.png')
+![](./Pasted%20image%2020260416195631.png)
 
 - Root shell obtained
     
@@ -358,4 +358,4 @@ Steps:
 
 ---
 
-![]('./Pasted%20image%2020260416200625.png')
+![](./Pasted%20image%2020260416200625.png)
