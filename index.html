@@ -752,8 +752,11 @@
     }
 
     .hero-tag::before {
-      content: '';
+      content: "\f105"; /* FontAwesome angle-right */
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
       color: var(--accent);
+      margin-right: 0.5rem;
     }
 
     .hero-name {
@@ -1038,6 +1041,8 @@
       padding: 1.5rem;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
+      white-space: pre-wrap;
+      word-break: break-all;
     }
 
     .t-line {
@@ -1109,8 +1114,11 @@
     }
 
     .section-label::before {
-      content: '';
+      content: "\f121"; /* FontAwesome code */
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
       color: var(--accent-mauve);
+      margin-right: 0.5rem;
     }
 
     .section-title {
@@ -2191,61 +2199,51 @@
     <h2 class="section-title glitch-hover" data-i18n="certs_title">Formación</h2>
     <div class="section-divider"></div>
 
-    <div class="edu-list">
-      <div class="edu-item fade-in">
-        <div class="edu-item-left">
-          <div class="edu-date">2023 - 2024</div>
-          <div class="edu-info">
-            <div class="edu-name">eJPT — eLearnSecurity Junior Penetration Tester</div>
-            <div class="edu-issuer" data-i18n="cert_ejpt_issuer">eLearnSecurity / INE · Certified</div>
-            <div class="edu-desc" data-i18n="cert_ejpt_desc">
-              Entry-level penetration testing certification validating practical skills in reconnaissance, network scanning, exploitation, and post-exploitation.
-            </div>
+    <div class="certs-grid">
+      <div class="cert-card featured fade-in">
+        <div class="cert-badge"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="cert-info">
+          <div class="cert-name">eJPT — eLearnSecurity Junior Penetration Tester</div>
+          <div class="cert-issuer" data-i18n="cert_ejpt_issuer">eLearnSecurity / INE · Certificado</div>
+          <div class="cert-desc" data-i18n="cert_ejpt_desc">
+            Certificación de nivel de entrada en penetration testing que valida habilidades prácticas
+            en reconocimiento, escaneo de redes, explotación de vulnerabilidades y
+            post-explotación. Evaluación 100% práctica en entorno de laboratorio real.
           </div>
         </div>
-        <div class="edu-badge"><i class="fa-solid fa-shield-halved"></i></div>
       </div>
-
-      <div class="edu-item fade-in">
-        <div class="edu-item-left">
-          <div class="edu-date">2022 - 2024</div>
-          <div class="edu-info">
-            <div class="edu-name" data-i18n="cert_smr_name">SMR — Sistemas Microinformáticos y Redes</div>
-            <div class="edu-issuer" data-i18n="cert_smr_issuer">Grado Medio · Completado</div>
-            <div class="edu-desc" data-i18n="cert_smr_desc">
-              Base técnica en hardware, redes y administración de sistemas.
-            </div>
+      <div class="cert-card fade-in">
+        <div class="cert-badge"><i class="fa-solid fa-microchip"></i></div>
+        <div class="cert-info">
+          <div class="cert-name" data-i18n="cert_smr_name">SMR — Sistemas Microinformáticos y Redes</div>
+          <div class="cert-issuer" data-i18n="cert_smr_issuer">Grado Medio · Completado</div>
+          <div class="cert-desc" data-i18n="cert_smr_desc">
+            Formación técnica base en hardware, montaje de equipos, redes locales,
+            administración de sistemas operativos y servicios microinformáticos.
           </div>
         </div>
-        <div class="edu-badge"><i class="fa-solid fa-microchip"></i></div>
       </div>
-
-      <div class="edu-item fade-in">
-        <div class="edu-item-left">
-          <div class="edu-date">2024 - 2026</div>
-          <div class="edu-info">
-            <div class="edu-name" data-i18n="cert_asir_name">ASIR — Administración de Sistemas Informáticos en Red</div>
-            <div class="edu-issuer" data-i18n="cert_asir_issuer">Formación Profesional · En curso</div>
-            <div class="edu-desc" data-i18n="cert_asir_desc">
-              Especialización en administración de redes, seguridad y servicios cloud.
-            </div>
+      <div class="cert-card fade-in">
+        <div class="cert-badge"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="cert-info">
+          <div class="cert-name" data-i18n="cert_asir_name">ASIR — Administración de Sistemas Informáticos en Red</div>
+          <div class="cert-issuer" data-i18n="cert_asir_issuer">Formación Profesional · En curso</div>
+          <div class="cert-desc" data-i18n="cert_asir_desc">
+            Grado Superior en administración de sistemas, redes, virtualización,
+            seguridad y servicios en la nube.
           </div>
         </div>
-        <div class="edu-badge"><i class="fa-solid fa-graduation-cap"></i></div>
       </div>
-
-      <div class="edu-item fade-in">
-        <div class="edu-item-left">
-          <div class="edu-date">2023 - actualidad</div>
-          <div class="edu-info">
-            <div class="edu-name" data-i18n="cert_ctf_name">CTF Player & Lab Practitioner</div>
-            <div class="edu-issuer">HackTheBox · TryHackMe · PicoCTF</div>
-            <div class="edu-desc" data-i18n="cert_ctf_desc">
-              Participación activa en laboratorios competitivos a nivel global.
-            </div>
+      <div class="cert-card featured reveal">
+        <div class="cert-badge"><i class="fa-solid fa-skull-crossbones"></i></div>
+        <div class="cert-info">
+          <div class="cert-name" data-i18n="cert_ctf_name">CTF Player & Lab Practitioner</div>
+          <div class="cert-issuer">HackTheBox · TryHackMe · PicoCTF</div>
+          <div class="cert-desc" data-i18n="cert_ctf_desc">
+            Participación activa en plataformas de práctica y competiciones
+            de ciberseguridad a nivel global.
           </div>
         </div>
-        <div class="edu-badge"><i class="fa-solid fa-skull-crossbones"></i></div>
       </div>
     </div>
   </section>
@@ -2652,70 +2650,68 @@
     // ── Terminal Typing Engine ──
     const terminalBody = document.getElementById('terminal-body');
     const terminalLines = [
-      { text: "nmap -sC -sV breakerxfixer.online", color: "t-cmd" },
-      { text: "Starting Nmap 7.94 ( https://nmap.org ) ...", color: "t-out" },
-      { text: "Nmap scan report for breakerxfixer.online (104.21.78.156)", color: "t-ok" },
-      { text: "PORT   STATE SERVICE VERSION", color: "t-out" },
-      { text: "80/tcp  open  http    Cloudflare http proxy", color: "t-warn" },
-      { text: "443/tcp open  https   Cloudflare http proxy", color: "t-warn" },
-      { text: "Enumerating directories with gobuster...", color: "t-cmd" },
-      { text: "Found: /admin (Status: 200) [Size: 1542]", color: "t-ok" },
-      { text: "Attempting exploit: custom/breakerfixer_auth_bypass...", color: "t-warn" },
-      { text: "[+] EXPLOIT SUCCESSFUL. SHELL GRANTED.", color: "t-ok" },
-      { text: "kyrox@breakerfixer:~$ whoami", color: "t-cmd" },
-      { text: "root", color: "t-ok" }
+      { type: "cmd", text: "nmap -sC -sV breakerxfixer.online" },
+      { type: "out", text: "Starting Nmap 7.94 ( https://nmap.org ) ...", color: "t-dim" },
+      { type: "out", text: "Nmap scan report for breakerxfixer.online (104.21.78.156)", color: "t-ok" },
+      { type: "out", text: "PORT      STATE SERVICE  VERSION", color: "t-dim" },
+      { type: "out", text: "80/tcp    open  http     Cloudflare http proxy", color: "t-warn" },
+      { type: "out", text: "443/tcp   open  https    Cloudflare http proxy", color: "t-warn" },
+      { type: "clear" },
+      { type: "cmd", text: "gobuster dir -u https://breakerxfixer.online -w common.txt" },
+      { type: "out", text: "Found: /admin (Status: 200) [Size: 1542]", color: "t-ok" },
+      { type: "out", text: "Found: /login (Status: 200) [Size: 840]", color: "t-ok" },
+      { type: "clear" },
+      { type: "cmd", text: "searchsploit breakerfixer" },
+      { type: "out", text: "Exploit Title                   |  Path", color: "t-dim" },
+      { type: "out", text: "--------------------------------|-----------------", color: "t-dim" },
+      { type: "out", text: "BreakerFixer Auth Bypass       |  custom/bf_bypass.py", color: "t-ok" },
+      { type: "cmd", text: "python3 bf_bypass.py" },
+      { type: "out", text: "[+] Exploit successful. Accessing shell...", color: "t-ok" },
+      { type: "out", text: "kyrox@breakerfixer:~$ whoami", color: "t-cmd" },
+      { type: "out", text: "root", color: "t-ok" }
     ];
 
     async function typeTerminal() {
       terminalBody.innerHTML = '';
       for (const line of terminalLines) {
+        if (line.type === "clear") {
+          await new Promise(r => setTimeout(r, 600));
+          terminalBody.innerHTML = '';
+          continue;
+        }
+
         const div = document.createElement('div');
         div.className = `t-line ${line.color || ''}`;
         terminalBody.appendChild(div);
         
-        const prefix = document.createElement('span');
-        prefix.className = 't-prompt';
-        prefix.innerText = '➜ ~ ';
-        div.appendChild(prefix);
+        if (line.type === "cmd") {
+          const prefix = document.createElement('span');
+          prefix.className = 't-prompt';
+          prefix.innerText = '➜ ~ ';
+          div.appendChild(prefix);
+        }
 
         const textSpan = document.createElement('span');
         div.appendChild(textSpan);
         
-        for (let char of line.text) {
-          textSpan.innerText += char;
-          await new Promise(r => setTimeout(r, 25));
+        if (line.type === "cmd") {
+          for (let char of line.text) {
+            textSpan.innerText += char;
+            await new Promise(r => setTimeout(r, 40));
+          }
+        } else {
+          textSpan.innerText = line.text;
+          await new Promise(r => setTimeout(r, 50));
         }
-        await new Promise(r => setTimeout(r, 100));
+        await new Promise(r => setTimeout(r, 200));
+        terminalBody.scrollTop = terminalBody.scrollHeight;
       }
       const cursorLine = document.createElement('div');
       cursorLine.innerHTML = `<span class="t-prompt">➜ ~ </span><span class="cursor-blink"></span>`;
       terminalBody.appendChild(cursorLine);
     }
 
-    // Magnetic Cards Effect
-    document.querySelectorAll('.machine-card, .skill-card, .cert-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = (centerY - y) / 10;
-        const rotateY = (x - centerX) / 10;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
-        
-        // Dynamic Glow
-        const glowX = (x / rect.width) * 100;
-        const glowY = (y / rect.height) * 100;
-        card.style.background = `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(203, 166, 247, 0.15) 0%, var(--glass) 80%)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)`;
-        card.style.background = `var(--glass)`;
-      });
-    });
+    // Terminal Init
     window.addEventListener('load', () => {
       setTimeout(() => {
         typeTerminal();
