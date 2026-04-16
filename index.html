@@ -396,15 +396,148 @@
       font-size: 0.8rem;
     }
 
+    /* ── Splash Screen ── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: var(--bg-crust);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+
+    #splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-content {
+      text-align: center;
+    }
+
+    .splash-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      color: var(--accent);
+      letter-spacing: 0.5em;
+      margin-bottom: 2rem;
+      animation: pulse-glow 2s infinite;
+    }
+
+    .splash-loader {
+      width: 200px;
+      height: 2px;
+      background: rgba(49, 50, 68, 0.5);
+      margin: 0 auto 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loader-bar {
+      position: absolute;
+      width: 40%;
+      height: 100%;
+      background: var(--accent);
+      animation: loader-slide 1.5s infinite ease-in-out;
+    }
+
+    .splash-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    @keyframes loader-slide {
+      0% { left: -40%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.5; text-shadow: 0 0 10px var(--accent); }
+      50% { opacity: 1; text-shadow: 0 0 25px var(--accent); }
+    }
+
+    /* ── Splash Screen ── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: var(--bg-crust);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), visibility 1s;
+    }
+
+    #splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-content {
+      text-align: center;
+    }
+
+    .splash-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      color: var(--accent);
+      letter-spacing: 0.8em;
+      margin-bottom: 2rem;
+      animation: pulse-glow 2s infinite;
+    }
+
+    .splash-loader {
+      width: 250px;
+      height: 2px;
+      background: rgba(49, 50, 68, 0.3);
+      margin: 0 auto 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loader-bar {
+      position: absolute;
+      width: 40%;
+      height: 100%;
+      background: var(--accent);
+      animation: loader-slide 2s infinite ease-in-out;
+    }
+
+    .splash-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      opacity: 0.6;
+    }
+
+    @keyframes loader-slide {
+      0% { left: -40%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.4; text-shadow: 0 0 10px var(--accent); }
+      50% { opacity: 1; text-shadow: 0 0 30px var(--accent); }
+    }
+
     /* ── Hero ── */
     #hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
+      justify-content: center;
       padding: 6rem 3rem 3rem;
       position: relative;
       overflow: hidden;
     }
+
 
     .hero-grid-bg {
       position: absolute;
@@ -666,14 +799,22 @@
     }
 
     .hero-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      position: relative;
       z-index: 2;
-      max-width: 600px;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
+
+    .hero-name {
+      color: var(--text);
+      line-height: 1;
+      text-shadow: 0 0 30px rgba(203, 166, 247, 0.3);
+      filter: drop-shadow(0 0 10px rgba(203, 166, 247, 0.2));
+    }
+
 
     .terminal {
       position: absolute;
@@ -916,6 +1057,43 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
+
+    .stat-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent-mauve);
+      opacity: 0.4;
+    }
+
+    /* ── Reveal Animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      filter: blur(10px);
+      transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
 
     /* ── Skills & Tags ── */
     #skills {
@@ -1605,10 +1783,21 @@
 </head>
 
 <body>
+  <!-- Splash Screen / Booting -->
+  <div id="splash">
+    <div class="splash-content">
+      <div class="splash-logo">KYROX SYSTEM</div>
+      <div class="splash-loader">
+        <div class="loader-bar"></div>
+      </div>
+      <div class="splash-text">INITIALIZING CORE... ACCESS GRANTED</div>
+    </div>
+  </div>
 
   <!-- Cursor -->
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
+
 
   <!-- Cyber Grid -->
   <div class="cyber-grid"></div>
@@ -1681,7 +1870,7 @@
       <h1 class="hero-name glitch-hover" style="font-size: clamp(2rem, 6vw, 4.5rem); margin-bottom: 0.5rem;">
         Alejandro De Luque
       </h1>
-      <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--accent-pink); margin-bottom: 2rem; letter-spacing: 0.2em; opacity: 0.8;">
+      <div class="hero-aka">
         [ <span data-i18n="hero_aka">aka Kyrox</span> ]
       </div>
       <p class="hero-subtitle" data-i18n="hero_subtitle" style="margin-bottom: 2.5rem;">
@@ -1745,20 +1934,24 @@
     </div>
 
     <!-- Stats pushed to occupy full width under the text area -->
-    <div class="stats-grid fade-in">
+    <div class="stats-grid reveal">
       <div class="stat-card">
+        <div class="stat-icon">🛡️</div>
         <div class="stat-num">1</div>
         <div class="stat-label" data-i18n="stat_cert">Certificación eJPT</div>
       </div>
       <div class="stat-card">
+        <div class="stat-icon">🎓</div>
         <div class="stat-num">ASIR</div>
         <div class="stat-label" data-i18n="stat_asir">Grado Superior cursando</div>
       </div>
       <div class="stat-card">
+        <div class="stat-icon">⚔️</div>
         <div class="stat-num">CTF</div>
         <div class="stat-label" data-i18n="stat_ctf">Competidor activo</div>
       </div>
       <div class="stat-card">
+        <div class="stat-icon">∞</div>
         <div class="stat-num">∞</div>
         <div class="stat-label" data-i18n="stat_curiosity">Curiosidad técnica</div>
       </div>
@@ -1882,7 +2075,7 @@
           </div>
         </div>
       </div>
-      <div class="cert-card fade-in">
+      <div class="cert-card featured reveal">
         <div class="cert-badge">⚔️</div>
         <div class="cert-info">
           <div class="cert-name" data-i18n="cert_ctf_name">CTF Player & Lab Practitioner</div>
@@ -2348,21 +2541,40 @@ Service Info: OS: Linux`,
       }
     }
 
+    // ── Splash Screen Logic ──
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('splash').classList.add('hidden');
+      }, 1000);
+    });
+
+    // ── Splash Screen Logic ──
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splash');
+        if (splash) splash.classList.add('hidden');
+      }, 1200);
+    });
+
     nextLine();
 
-    // ── Fade In Observer ──
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
+    // ── Scroll Reveal Observer ──
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
         if (e.isIntersecting) {
-          const siblings = [...e.target.parentElement.querySelectorAll('.fade-in')];
-          const idx = siblings.indexOf(e.target);
-          setTimeout(() => e.target.classList.add('visible'), idx * 120);
-          observer.unobserve(e.target);
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, observerOptions);
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal, .fade-in').forEach(el => revealObserver.observe(el));
+
 
     // ── Real-time Clock ──
     function updateClock() {
