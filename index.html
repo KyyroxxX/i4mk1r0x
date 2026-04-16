@@ -19,7 +19,7 @@
       --bg-alt: #181825;
       --bg-crust: #11111b;
       --surface: #313244;
-      --border: #45475a;
+      --border: rgba(203, 166, 247, 0.2);
       --accent: #cba6f7;
       /* Mauve */
       --accent-pink: #f5c2e7;
@@ -30,11 +30,13 @@
       --text: #cdd6f4;
       --text-dim: #9399b2;
       --text-bright: #f5e0dc;
-      --glow: 0 4px 15px rgba(203, 166, 247, 0.3);
-      --radius: 12px;
-      --shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
-      --glass: rgba(24, 24, 37, 0.6);
-      --glass-border: rgba(203, 166, 247, 0.2);
+      --glow: 0 4px 15px rgba(203, 166, 247, 0.4);
+      --radius: 16px;
+      --shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.8);
+      --glass: rgba(24, 24, 37, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --mesh-1: rgba(203, 166, 247, 0.15);
+      --mesh-2: rgba(245, 194, 231, 0.1);
     }
 
     *,
@@ -107,23 +109,52 @@
       transition: transform 0.15s ease-out;
     }
 
-    /* ── Aesthetic Wallpaper (Mauve/Pink Mesh) & Cyber Grid ── */
+    /* ── Elite Mesh Gradient Background ── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-color: #1e1e2e;
-      background-image:
-        radial-gradient(at 0% 0%, rgba(203, 166, 247, 0.25) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(245, 194, 231, 0.2) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(243, 139, 168, 0.2) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(203, 166, 247, 0.2) 0px, transparent 50%),
-        linear-gradient(135deg, #181825 0%, #1e1e2e 100%);
+      background-color: var(--bg-crust);
+      background-image: 
+        radial-gradient(at 0% 0%, var(--mesh-1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, var(--mesh-2) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(243, 139, 168, 0.1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, var(--mesh-1) 0px, transparent 50%);
       pointer-events: none;
       z-index: -2;
+      animation: mesh-drift 20s ease-in-out infinite alternate;
     }
 
-    .cyber-grid {
+    @keyframes mesh-drift {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1) translate(20px, -20px); }
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-mauve), var(--accent-pink));
+      z-index: 10000;
+      width: 0%;
+      transition: width 0.1s ease-out;
+      box-shadow: 0 0 10px var(--accent-mauve);
+    }
+
+    .sys-monitor {
+      display: flex;
+      gap: 1.2rem;
+      margin-right: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .sys-item i {
+      color: var(--accent-pink);
+      font-size: 0.8rem;
+    }
       position: fixed;
       top: 0;
       left: 0;
@@ -1094,11 +1125,12 @@
     }
 
     .stat-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius);
       padding: 1.5rem;
-      transition: all 0.3s;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1275,17 +1307,19 @@
     }
 
     .skill-card {
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius);
       padding: 2rem;
-      transition: all 0.3s;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .skill-card:hover {
-      border-color: var(--accent-mauve);
+      border-color: var(--accent);
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 40px -10px rgba(203, 166, 247, 0.2), inset 0 0 20px rgba(203, 166, 247, 0.05);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(203, 166, 247, 0.05);
     }
 
     .skill-icon {
@@ -1340,14 +1374,16 @@
     }
 
     .cert-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius);
       padding: 2.5rem;
       display: flex;
       gap: 2rem;
       align-items: flex-start;
-      transition: all 0.3s;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .cert-card.featured {
@@ -1394,9 +1430,10 @@
     }
 
     .project-card {
-      background: rgba(49, 50, 68, 0.3);
+      background: var(--glass);
       backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius);
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1676,6 +1713,8 @@
       padding: 1rem;
       border-radius: 6px;
       outline: none;
+    }
+
     .fade-in.visible {
       opacity: 1;
       transform: none;
@@ -1685,8 +1724,8 @@
     .scroll-indicator {
       position: absolute;
       bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 50% !important;
+      transform: translateX(-50%) !important;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1698,7 +1737,8 @@
       letter-spacing: 0.2em;
       opacity: 0.6;
       transition: all 0.3s ease;
-      z-index: 10;
+      z-index: 100;
+      margin: 0 !important;
     }
 
     .scroll-indicator:hover {
@@ -1759,11 +1799,15 @@
     /* Mobile (768px) */
     @media (max-width: 768px) {
       section { padding: 4rem 1.5rem; }
-      .polybar .bar-center, .polybar .bar-right .tray-icon { display: none; }
+      .polybar .bar-center, .polybar .bar-right .tray-icon, .sys-monitor { display: none; }
       .section-title { font-size: 2.2rem; }
-      .skills-grid, .machines-grid, .certs-grid { grid-template-columns: 1fr; }
+      .skills-grid, .machines-grid, .certs-grid, .stats-grid, .projects-grid { 
+        grid-template-columns: 1fr !important; 
+        gap: 1.5rem;
+      }
       .cert-card.featured { grid-column: span 1; }
       .cert-card { flex-direction: column; text-align: center; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
     }
 
     /* Phones (480px) */
@@ -1839,12 +1883,16 @@
       <div class="ws-icon ghost"></div>
     </div>
     <div class="bar-right">
+      <div class="sys-monitor">
+        <span class="sys-item"><i class="fa-solid fa-microchip"></i> <span id="cpu-load">12%</span></span>
+        <span class="sys-item"><i class="fa-solid fa-memory"></i> <span id="ram-usage">24%</span></span>
+      </div>
       <button class="lang-toggle-btn" onclick="openLangModal()">
         <span>EN/ES</span>
       </button>
       <span class="tray-icon"><i class="fa-solid fa-wifi"></i></span>
       <span class="tray-icon"><i class="fa-brands fa-bluetooth"></i></span>
-      <span class="tray-icon"><i class="fa-solid fa-volume-high"></i></span>
+      <span class="tray-icon"><i class="fa-solid fa-battery-three-quarters"></i></span>
       <span class="tray-time" id="tray-clock">16:41</span>
     </div>
   </nav>
@@ -2454,9 +2502,7 @@
       document.title = lang === 'es' ? 'Kyrox — Investigador de Seguridad' : 'Kyrox — Security Researcher';
 
       // Reset Terminal
-      li = 0; ci = 0; phase = 'cmd';
-      tbody.innerHTML = '';
-      nextLine();
+      typeTerminal();
 
       // Close modal
       document.getElementById('lang-modal').classList.remove('active');
@@ -2480,123 +2526,108 @@
       }
     });
 
-    // ── Cursor ──
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursor-ring');
+    // ── Elite Interaction System ──
+    const scrollProgress = document.getElementById('scroll-progress');
+    const cursorRing = document.getElementById('cursor-ring');
+    const cursorDot = document.getElementById('cursor');
     let mx = 0, my = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-      ring.style.left = mx + 'px';
-      ring.style.top = my + 'px';
-    });
-    document.querySelectorAll('a, button, .skill-card, .cert-card, .stat-card').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%,-50%) scale(2)');
-      el.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%,-50%) scale(1)');
+
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; 
+      my = e.clientY;
+      cursorDot.style.left = mx + 'px';
+      cursorDot.style.top = my + 'px';
+      cursorRing.style.left = mx + 'px';
+      cursorRing.style.top = my + 'px';
     });
 
-    // ── Terminal Typewriter ──
-    const getLines = (lang) => [
-      {
-        type: 'prompt',
-        cmd: 'whoami',
-        out: translations[lang].term_whoami,
-        outClass: 'ok'
-      },
-      {
-        type: 'prompt',
-        cmd: 'uname -a',
-        out: 'Linux archbox 6.8.5-zen x86_64 GNU/Linux',
-        outClass: 'ok'
-      },
-      {
-        type: 'prompt',
-        cmd: 'nmap -sC -sV -T4 breakerxfixer.online',
-        clear: true,
-        out: `PORT     STATE SERVICE VERSION
-22/tcp   open  ssh     OpenSSH 9.3
-80/tcp   open  http    nginx 1.24.0
-443/tcp  open  https   nginx
-Service Info: OS: Linux`,
-        outClass: 'ok'
-      },
-      {
-        type: 'prompt',
-        cmd: 'echo "' + translations[lang].term_access + '" > report.txt',
-        out: translations[lang].term_report,
-        outClass: 'ok'
-      }
+    window.addEventListener('scroll', () => {
+      const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / windowHeight) * 100;
+      scrollProgress.style.width = `${progress}%`;
+    });
+
+    // Reactive Cursor
+    document.querySelectorAll('a, button, .machine-card, .skill-card, .cert-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        cursorRing.style.borderColor = 'var(--accent-pink)';
+        cursorDot.style.background = 'var(--accent-pink)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursorRing.style.borderColor = 'var(--accent-mauve)';
+        cursorDot.style.background = 'var(--accent)';
+      });
+    });
+
+    // ── Terminal Typing Engine ──
+    const terminalBody = document.getElementById('terminal-body');
+    const terminalLines = [
+      { text: "Initializing Kyrox OS...", color: "t-ok" },
+      { text: "Loading core modules...", color: "t-cmd" },
+      { text: "Kernel: Arch Linux x86_64", color: "t-warn" },
+      { text: "Uptime: 24 days, 13 hours", color: "t-out" },
+      { text: "Memory: 162.4 MB / 64.0 GB (0%)", color: "t-out" },
+      { text: "Access: Granting entry as root...", color: "t-ok" },
+      { text: "Welcome back, Alejandro.", color: "accent" }
     ];
 
-    let terminalLines = [];
-    const tbody = document.getElementById('terminal-body');
-    let li = 0, ci = 0, phase = 'cmd'; // phase: cmd | out
-    let currentLine = null;
-    let promptEl = null, cmdEl = null, outEl = null;
+    async function typeTerminal() {
+      terminalBody.innerHTML = '';
+      for (const line of terminalLines) {
+        const div = document.createElement('div');
+        div.className = `t-line ${line.color || ''}`;
+        terminalBody.appendChild(div);
+        
+        const prefix = document.createElement('span');
+        prefix.className = 't-prompt';
+        prefix.innerText = '➜ ~ ';
+        div.appendChild(prefix);
 
-    function nextLine() {
-      terminalLines = getLines(currentLang || 'en');
-      if (li >= terminalLines.length) return;
-      const line = terminalLines[li];
-
-      if (line.clear) {
-        tbody.innerHTML = '';
-      }
-
-      currentLine = document.createElement('div');
-      currentLine.className = 't-line';
-      promptEl = document.createElement('span');
-      promptEl.className = 't-prompt';
-      promptEl.textContent = 'kyrox@archbox:~$ ';
-      cmdEl = document.createElement('span');
-      cmdEl.className = 't-cmd';
-      currentLine.appendChild(promptEl);
-      currentLine.appendChild(cmdEl);
-      const blinkCursor = document.createElement('span');
-      blinkCursor.className = 'cursor-blink';
-      blinkCursor.id = 'tcursor';
-      currentLine.appendChild(blinkCursor);
-      tbody.appendChild(currentLine);
-      ci = 0; phase = 'cmd';
-      typeChar();
-    }
-
-    function typeChar() {
-      const line = terminalLines[li];
-      if (phase === 'cmd') {
-        if (ci < line.cmd.length) {
-          cmdEl.textContent += line.cmd[ci++];
-          setTimeout(typeChar, 40 + Math.random() * 30);
-        } else {
-          document.getElementById('tcursor')?.remove();
-          setTimeout(() => { phase = 'out'; showOut(); }, 300 + Math.random() * 200);
+        const textSpan = document.createElement('span');
+        div.appendChild(textSpan);
+        
+        for (let char of line.text) {
+          textSpan.innerText += char;
+          await new Promise(r => setTimeout(r, 25));
         }
+        await new Promise(r => setTimeout(r, 100));
       }
+      const cursorLine = document.createElement('div');
+      cursorLine.innerHTML = `<span class="t-prompt">➜ ~ </span><span class="cursor-blink"></span>`;
+      terminalBody.appendChild(cursorLine);
     }
 
-    function showOut() {
-      const line = terminalLines[li];
-      const outLines = line.out.split('\n');
-      outLines.forEach(ol => {
-        const d = document.createElement('div');
-        d.className = 't-line t-' + line.outClass;
-        d.textContent = ol;
-        tbody.appendChild(d);
+    // Magnetic Cards Effect
+    document.querySelectorAll('.machine-card, .skill-card, .cert-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (centerY - y) / 10;
+        const rotateY = (x - centerX) / 10;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+        
+        // Dynamic Glow
+        const glowX = (x / rect.width) * 100;
+        const glowY = (y / rect.height) * 100;
+        card.style.background = `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(203, 166, 247, 0.15) 0%, var(--glass) 80%)`;
       });
-      tbody.scrollTop = tbody.scrollHeight;
-      li++;
-      if (li < terminalLines.length) {
-        setTimeout(nextLine, 800 + Math.random() * 600);
-      } else {
-        // Loop
-        setTimeout(() => {
-          tbody.innerHTML = '';
-          li = 0;
-          nextLine();
-        }, 4000);
-      }
-    }
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)`;
+        card.style.background = `var(--glass)`;
+      });
+    });
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        typeTerminal();
+      }, 2000);
+    });
 
     // ── Splash Screen Logic ──
     window.addEventListener('load', () => {
@@ -2605,8 +2636,6 @@ Service Info: OS: Linux`,
         if (splash) splash.classList.add('hidden');
       }, 1200);
     });
-
-    nextLine();
 
     // ── Scroll Reveal Observer ──
     const observerOptions = {
@@ -2676,7 +2705,15 @@ Service Info: OS: Linux`,
       document.getElementById('widget-date').textContent = dateStr;
     }
     setInterval(updateClock, 1000);
-    updateClock();
+    // ── Simulated System Monitor ──
+    function updateSysStats() {
+      const cpu = Math.floor(Math.random() * 10) + 5;
+      const ram = Math.floor(Math.random() * 5) + 20;
+      document.getElementById('cpu-load').innerText = `${cpu}%`;
+      document.getElementById('ram-usage').innerText = `${ram}%`;
+    }
+    setInterval(updateSysStats, 3000);
+    updateSysStats();
 
     // ── YouTube Music Logic ──
     let player;
