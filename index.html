@@ -2941,8 +2941,17 @@
 
         // Incorporar automáticamente los demás repositorios públicos de ambas cuentas.
         const featuredNames = new Set(featured.map(repo => repo.full_name.toLowerCase()));
+        const excludedRepos = new Set([
+          'breakerxfixer/breakerxfixerv2.github.io',
+          'kyyroxxx/kyyroxxx.github.io'
+        ]);
         const recent = repos
-          .filter(repo => !repo.fork && !repo.archived && !featuredNames.has(repo.full_name.toLowerCase()))
+          .filter(repo =>
+            !repo.fork &&
+            !repo.archived &&
+            !featuredNames.has(repo.full_name.toLowerCase()) &&
+            !excludedRepos.has(repo.full_name.toLowerCase())
+          )
           .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
         const selected = [...featured, ...recent];
