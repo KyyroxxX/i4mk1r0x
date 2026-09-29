@@ -1951,6 +1951,16 @@
       70% { box-shadow: 0 0 0 10px rgba(166, 227, 161, 0); }
       100% { box-shadow: 0 0 0 0 rgba(166, 227, 161, 0); }
     }
+    .projects-intro { color: var(--text-dim); max-width: 720px; margin: -1rem 0 2rem; }
+    .projects-footer { display:flex; justify-content:center; margin-top:2rem; }
+    .github-project { overflow:hidden; min-width:0; }
+    .github-project-img { display:flex; align-items:center; justify-content:space-between; padding:1.5rem 1.7rem; min-height:112px; background:linear-gradient(135deg,var(--surface),var(--bg-crust)); }
+    .github-project-img > span { font-size:2rem; color:var(--accent); }
+    .github-project-img small { font:600 .68rem 'JetBrains Mono',monospace; letter-spacing:.12em; color:var(--text-dim); }
+    .project-meta { display:flex; flex-wrap:wrap; gap:.65rem 1rem; margin:1rem 0; color:var(--text-dim); font-size:.78rem; }
+    .project-meta span { display:inline-flex; align-items:center; gap:.35rem; }
+    .project-meta i { color:var(--accent); }
+    @media (max-width:640px) { .project-meta { gap:.5rem .75rem; } }
   </style>
 </head>
 
@@ -2292,24 +2302,11 @@
     <h2 class="section-title glitch-hover" data-i18n="projects_title">Proyectos Destacados</h2>
     <div class="section-divider"></div>
 
-    <div class="projects-grid">
-      <div class="project-card fade-in">
-        <div class="project-img"></div>
-        <div class="project-info">
-          <div class="project-title">
-            BreakerFixer <span data-i18n="project_live">Live</span>
-          </div>
-          <p class="project-desc" data-i18n="project_desc">
-            Plataforma dedicada al aprendizaje de ciberseguridad ofensiva.
-            Incluye guías detalladas, retos prácticos y una comunidad
-            enfocada en el crecimiento mutuo en el sector.
-          </p>
-          <a href="https://breakerxfixer.online" target="_blank" class="project-link" data-i18n="project_link">
-            Visitar sitio oficial ▸
-          </a>
-        </div>
-      </div>
+    <p class="projects-intro">Proyectos reales, laboratorios y herramientas. Esta sección se actualiza automáticamente desde mis repositorios públicos de GitHub.</p>
+    <div class="projects-grid" id="github-projects" aria-live="polite">
+      <div class="project-card"><div class="project-info"><p class="project-desc">Cargando proyectos desde GitHub…</p></div></div>
     </div>
+    <div class="projects-footer"><a href="https://github.com/KyyroxxX?tab=repositories" target="_blank" rel="noopener noreferrer" class="project-link">Ver todos mis repositorios en GitHub ↗</a></div>
   </section>
 
   <!-- Writeups -->
@@ -2892,6 +2889,47 @@
 
     window.prevTrack = () => player.seekTo(0);
     window.nextTrack = () => alert("Siguiente canción pronto...");
+
+    // ── GitHub portfolio: public repositories, refreshed on page load ──
+    async function loadGitHubProjects() {
+      const container = document.getElementById('github-projects');
+      if (!container) return;
+      const pinnedOrder = ['SentinelOps', 'CiberSecurity-Pentesting', 'i4mk1r0x'];
+      const excluded = new Set(['KyyroxxX', 'A-LEGENDARY-GIFT-AWAITS', 'KyyroxxX.github.io']);
+      const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+      try {
+        const response = await fetch('https://api.github.com/users/KyyroxxX/repos?type=public&sort=updated&per_page=100', {
+          headers: { 'Accept': 'application/vnd.github+json' }
+        });
+        if (!response.ok) throw new Error('GitHub API respondió ' + response.status);
+        const repos = await response.json();
+        const eligible = repos.filter(repo => !repo.fork && !repo.archived && !excluded.has(repo.name));
+        eligible.sort((a, b) => {
+          const ai = pinnedOrder.indexOf(a.name), bi = pinnedOrder.indexOf(b.name);
+          if (ai !== -1 || bi !== -1) return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+          return new Date(b.updated_at) - new Date(a.updated_at);
+        });
+        const selected = eligible.slice(0, 6);
+        if (!selected.length) throw new Error('No hay repositorios públicos disponibles.');
+        container.innerHTML = selected.map(repo => {
+          const description = repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
+          const updated = new Date(repo.updated_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short' });
+          return `<article class="project-card fade-in github-project">
+            <div class="project-img github-project-img"><span><i class="fa-brands fa-github"></i></span><small>OPEN SOURCE / GITHUB</small></div>
+            <div class="project-info">
+              <div class="project-title">${esc(repo.name)}</div>
+              <p class="project-desc">${esc(description)}</p>
+              <div class="project-meta">${repo.language ? `<span><i class="fa-solid fa-code"></i> ${esc(repo.language)}</span>` : ''}<span><i class="fa-solid fa-star"></i> ${repo.stargazers_count}</span><span>Actualizado ${esc(updated)}</span></div>
+              <a href="${esc(repo.html_url)}" target="_blank" rel="noopener noreferrer" class="project-link">Explorar repositorio ↗</a>
+            </div>
+          </article>`;
+        }).join('');
+      } catch (error) {
+        container.innerHTML = '<div class="project-card"><div class="project-info"><p class="project-desc">No se pudieron cargar los repositorios ahora mismo. Puedes consultar el perfil directamente.</p><a class="project-link" href="https://github.com/KyyroxxX?tab=repositories" target="_blank" rel="noopener noreferrer">Abrir GitHub ↗</a></div></div>';
+        console.warn('GitHub projects:', error);
+      }
+    }
+    loadGitHubProjects();
 
     // ── Form ──
     async function handleSubmit(e) {
