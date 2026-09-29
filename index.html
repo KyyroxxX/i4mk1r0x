@@ -1954,8 +1954,13 @@
     .projects-intro { color: var(--text-dim); max-width: 720px; margin: -1rem 0 2rem; }
     .projects-footer { display:flex; justify-content:center; margin-top:2rem; }
     .github-project { overflow:hidden; min-width:0; }
-    .github-project-img { display:flex; align-items:center; justify-content:space-between; padding:1.5rem 1.7rem; min-height:112px; background:linear-gradient(135deg,var(--surface),var(--bg-crust)); }
+    .github-project-img { position:relative; display:flex; align-items:center; justify-content:space-between; padding:1.5rem 1.7rem; min-height:180px; overflow:hidden; background:linear-gradient(135deg,var(--surface),var(--bg-crust)); }
+    .github-project-img > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.78; transition:transform .35s ease, opacity .35s ease; }
+    .github-project:hover .github-project-img > img { transform:scale(1.035); opacity:.92; }
+    .github-project-img.has-preview::after { content:''; position:absolute; inset:45% 0 0; background:linear-gradient(transparent,rgba(20,18,32,.78)); pointer-events:none; }
+    .github-project-img > span, .github-project-img > small { position:relative; z-index:1; text-shadow:0 1px 8px rgba(0,0,0,.7); }
     .github-project-img > span { font-size:2rem; color:var(--accent); }
+    .github-project-img > small { margin-left:auto; }
     .github-project-img small { font:600 .68rem 'JetBrains Mono',monospace; letter-spacing:.12em; color:var(--text-dim); }
     .project-meta { display:flex; flex-wrap:wrap; gap:.65rem 1rem; margin:1rem 0; color:var(--text-dim); font-size:.78rem; }
     .project-meta span { display:inline-flex; align-items:center; gap:.35rem; }
@@ -2965,11 +2970,17 @@
           'breakerxfixer/breakerxfixer.github.io': 'Plataforma web de ciberseguridad con rutas ofensivas y defensivas, retos CTF, terminal de práctica, writeups y seguimiento de progreso.',
           'kyyroxxx/kyyroxxx': 'Perfil técnico de GitHub: presentación profesional, certificación eJPTv2, áreas de estudio y acceso a proyectos de sistemas, redes y ciberseguridad.'
         };
+        const projectImages = {
+          'kyyroxxx/sentinelops': 'https://raw.githubusercontent.com/KyyroxxX/SentinelOps/main/screenshots/03-sentinelops-dashboard.png',
+          'breakerxfixer/breakerxfixer.github.io': 'https://raw.githubusercontent.com/BreakerxFixer/breakerxfixer.github.io/main/images/ctfs-hero.png'
+        };
         container.innerHTML = selected.map((repo, index) => {
-          const description = projectDescriptions[repo.full_name.toLowerCase()] || repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
+          const repoKey = repo.full_name.toLowerCase();
+          const description = projectDescriptions[repoKey] || repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
           const updated = new Date(repo.updated_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short' });
+          const preview = projectImages[repoKey];
           return `<article class="project-card fade-in github-project">
-            <div class="project-img github-project-img"><span><i class="fa-brands fa-github"></i></span><small>OPEN SOURCE / GITHUB</small></div>
+            <div class="project-img github-project-img ${preview ? 'has-preview' : ''}">${preview ? `<img src="${preview}" alt="Vista previa de ${esc(repo.name)}" loading="lazy" onerror="this.parentElement.classList.remove('has-preview');this.remove();">` : ''}<span><i class="fa-brands fa-github"></i></span><small>OPEN SOURCE / GITHUB</small></div>
             <div class="project-info">
               <div class="project-title">${esc(repo.name)}${index < featured.length ? ' <span class="project-featured-badge">DESTACADO</span>' : ''} </div>
               <p class="project-desc">${esc(description)}</p>
