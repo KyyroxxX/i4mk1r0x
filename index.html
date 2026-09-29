@@ -2908,9 +2908,14 @@
     async function loadGitHubProjects() {
       const container = document.getElementById('github-projects');
       if (!container) return;
-      // Selección editorial para recruiters: infraestructura/observabilidad + práctica documentada de ciberseguridad.
-      // Añade aquí únicamente repositorios que quieras mostrar en el portfolio.
-      const featuredRepos = ['SentinelOps', 'CiberSecurity-Pentesting'];
+      // Proyectos que siempre deben aparecer primero en el portfolio.
+      // Después se añaden automáticamente tus nuevos repos públicos.
+      const featuredRepos = [
+        { owner: 'KyyroxxX', name: 'SentinelOps' },
+        { owner: 'KyyroxxX', name: 'CiberSecurity-Pentesting' },
+        { owner: 'BreakerxFixer', name: 'breakerxfixer.github.io' },
+        { owner: 'KyyroxxX', name: 'KyyroxxX' }
+      ];
       const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
       try {
         const response = await fetch('https://api.github.com/users/KyyroxxX/repos?type=public&sort=updated&per_page=100', {
@@ -2919,17 +2924,31 @@
         if (!response.ok) throw new Error('GitHub API respondió ' + response.status);
         const repos = await response.json();
         const eligible = repos.filter(repo => !repo.fork && !repo.archived);
-        const selected = featuredRepos
-          .map(name => eligible.find(repo => repo.name === name))
+
+        // Destacados: los cuatro proyectos definidos arriba.
+        const featured = featuredRepos
+          .map(item => eligible.find(repo =>
+            repo.name === item.name &&
+            repo.owner?.login === item.owner
+          ))
           .filter(Boolean);
+
+        // Nuevos proyectos: cualquier repo público nuevo se incorpora automáticamente,
+        // ordenado por actividad reciente y sin duplicar los destacados.
+        const featuredNames = new Set(featured.map(repo => repo.full_name));
+        const recent = eligible
+          .filter(repo => !featuredNames.has(repo.full_name))
+          .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+        const selected = [...featured, ...recent].slice(0, 8);
         if (!selected.length) throw new Error('No hay repositorios públicos disponibles.');
-        container.innerHTML = selected.map(repo => {
+        container.innerHTML = selected.map((repo, index) => {
           const description = repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
           const updated = new Date(repo.updated_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short' });
           return `<article class="project-card fade-in github-project">
             <div class="project-img github-project-img"><span><i class="fa-brands fa-github"></i></span><small>OPEN SOURCE / GITHUB</small></div>
             <div class="project-info">
-              <div class="project-title">${esc(repo.name)}</div>
+              <div class="project-title">${esc(repo.name)}${index < featured.length ? ' <span class="project-featured-badge">DESTACADO</span>' : ''} </div>
               <p class="project-desc">${esc(description)}</p>
               <div class="project-meta">${repo.language ? `<span><i class="fa-solid fa-code"></i> ${esc(repo.language)}</span>` : ''}<span><i class="fa-solid fa-star"></i> ${repo.stargazers_count}</span><span>Actualizado ${esc(updated)}</span></div>
               <a href="${esc(repo.html_url)}" target="_blank" rel="noopener noreferrer" class="project-link">Explorar repositorio ↗</a>
