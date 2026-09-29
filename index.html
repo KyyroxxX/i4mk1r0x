@@ -2908,8 +2908,9 @@
     async function loadGitHubProjects() {
       const container = document.getElementById('github-projects');
       if (!container) return;
-      const featuredRepos = ['SentinelOps', 'CiberSecurity-Pentesting', 'i4mk1r0x']; // Mantén esta lista sincronizada con los repos fijados en GitHub: la API REST pública no expone los pins del perfil.
-      const excluded = new Set(['KyyroxxX', 'A-LEGENDARY-GIFT-AWAITS', 'KyyroxxX.github.io']);
+      // Selección editorial para recruiters: infraestructura/observabilidad + práctica documentada de ciberseguridad.
+      // Añade aquí únicamente repositorios que quieras mostrar en el portfolio.
+      const featuredRepos = ['SentinelOps', 'CiberSecurity-Pentesting'];
       const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
       try {
         const response = await fetch('https://api.github.com/users/KyyroxxX/repos?type=public&sort=updated&per_page=100', {
@@ -2917,13 +2918,10 @@
         });
         if (!response.ok) throw new Error('GitHub API respondió ' + response.status);
         const repos = await response.json();
-        const eligible = repos.filter(repo => !repo.fork && !repo.archived && !excluded.has(repo.name));
-        eligible.sort((a, b) => {
-          const ai = featuredRepos.indexOf(a.name), bi = featuredRepos.indexOf(b.name);
-          if (ai !== -1 || bi !== -1) return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-          return new Date(b.updated_at) - new Date(a.updated_at);
-        });
-        const selected = eligible.slice(0, 6);
+        const eligible = repos.filter(repo => !repo.fork && !repo.archived);
+        const selected = featuredRepos
+          .map(name => eligible.find(repo => repo.name === name))
+          .filter(Boolean);
         if (!selected.length) throw new Error('No hay repositorios públicos disponibles.');
         container.innerHTML = selected.map(repo => {
           const description = repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
