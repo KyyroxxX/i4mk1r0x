@@ -2959,8 +2959,14 @@
 
         const selected = [...featured, ...recent];
         if (!selected.length) throw new Error('No hay repositorios públicos disponibles.');
+        const projectDescriptions = {
+          'kyyroxxx/sentinelops': 'Laboratorio reproducible de monitorización Linux con Docker Compose, Prometheus, Grafana y Node Exporter. Incluye métricas de host, dashboards provisionados y configuración endurecida.',
+          'kyyroxxx/cibersecurity-pentesting': 'Repositorio de aprendizaje práctico en ciberseguridad: laboratorios autorizados, metodología de pentesting, seguridad web, redes y documentación técnica.',
+          'breakerxfixer/breakerxfixer.github.io': 'Plataforma web de ciberseguridad con rutas ofensivas y defensivas, retos CTF, terminal de práctica, writeups y seguimiento de progreso.',
+          'kyyroxxx/kyyroxxx': 'Perfil técnico de GitHub: presentación profesional, certificación eJPTv2, áreas de estudio y acceso a proyectos de sistemas, redes y ciberseguridad.'
+        };
         container.innerHTML = selected.map((repo, index) => {
-          const description = repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
+          const description = projectDescriptions[repo.full_name.toLowerCase()] || repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
           const updated = new Date(repo.updated_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short' });
           return `<article class="project-card fade-in github-project">
             <div class="project-img github-project-img"><span><i class="fa-brands fa-github"></i></span><small>OPEN SOURCE / GITHUB</small></div>
