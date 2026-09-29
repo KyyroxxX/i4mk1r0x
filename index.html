@@ -2918,29 +2918,34 @@
       ];
       const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
       try {
-        const response = await fetch('https://api.github.com/users/KyyroxxX/repos?type=public&sort=updated&per_page=100', {
-          headers: { 'Accept': 'application/vnd.github+json' }
-        });
-        if (!response.ok) throw new Error('GitHub API respondió ' + response.status);
-        const repos = await response.json();
-        const eligible = repos.filter(repo => !repo.fork && !repo.archived);
+        // Consultamos ambas cuentas: los destacados viven en dos propietarios distintos.
+        const owners = [...new Set([...featuredRepos.map(item => item.owner), 'KyyroxxX', 'BreakerxFixer'])];
+        const responses = await Promise.all(owners.map(owner =>
+          fetch(`https://api.github.com/users/${encodeURIComponent(owner)}/repos?type=public&sort=updated&per_page=100`, {
+            headers: { 'Accept': 'application/vnd.github+json' }
+          })
+        ));
+        if (responses.some(response => !response.ok)) {
+          throw new Error('GitHub API no pudo consultar todos los perfiles.');
+        }
+        const repoLists = await Promise.all(responses.map(response => response.json()));
+        const repos = [...new Map(repoLists.flat().map(repo => [repo.full_name.toLowerCase(), repo])).values()];
 
-        // Destacados: los cuatro proyectos definidos arriba.
+        // Los destacados se muestran incluso si son forks; el resto excluye forks y archivados.
         const featured = featuredRepos
-          .map(item => eligible.find(repo =>
-            repo.name === item.name &&
-            repo.owner?.login === item.owner
+          .map(item => repos.find(repo =>
+            repo.name.toLowerCase() === item.name.toLowerCase() &&
+            repo.owner?.login.toLowerCase() === item.owner.toLowerCase()
           ))
           .filter(Boolean);
 
-        // Nuevos proyectos: cualquier repo público nuevo se incorpora automáticamente,
-        // ordenado por actividad reciente y sin duplicar los destacados.
-        const featuredNames = new Set(featured.map(repo => repo.full_name));
-        const recent = eligible
-          .filter(repo => !featuredNames.has(repo.full_name))
+        // Incorporar automáticamente los demás repositorios públicos de ambas cuentas.
+        const featuredNames = new Set(featured.map(repo => repo.full_name.toLowerCase()));
+        const recent = repos
+          .filter(repo => !repo.fork && !repo.archived && !featuredNames.has(repo.full_name.toLowerCase()))
           .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
-        const selected = [...featured, ...recent].slice(0, 8);
+        const selected = [...featured, ...recent];
         if (!selected.length) throw new Error('No hay repositorios públicos disponibles.');
         container.innerHTML = selected.map((repo, index) => {
           const description = repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
