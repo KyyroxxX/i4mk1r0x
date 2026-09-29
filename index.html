@@ -1961,6 +1961,11 @@
     .project-meta span { display:inline-flex; align-items:center; gap:.35rem; }
     .project-meta i { color:var(--accent); }
     @media (max-width:640px) { .project-meta { gap:.5rem .75rem; } }
+    .hero-availability { display:flex; align-items:center; justify-content:center; gap:.55rem; margin:1.25rem auto 0; color:var(--text-dim); font:500 .78rem 'JetBrains Mono',monospace; letter-spacing:.015em; text-align:center; }
+    .hero-availability i { color:var(--accent-green); font-size:.7rem; }
+    .hero-ctas { flex-wrap:wrap; justify-content:center; }
+    .hero-ctas .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; }
+    @media (max-width:600px) { .hero-availability { padding:0 1rem; font-size:.68rem; } .hero-ctas .btn { min-width: min(100%, 220px); } }
   </style>
 </head>
 
@@ -2065,7 +2070,10 @@
       <div class="hero-ctas">
         <a href="#contact" class="btn btn-primary" data-i18n="hero_cta_contact">Contactar</a>
         <a href="#about" class="btn btn-secondary" data-i18n="hero_cta_explore">Explorar docs</a>
+        <a href="https://github.com/KyyroxxX" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-i18n="hero_cta_github"><i class="fa-brands fa-github"></i> Ver GitHub</a>
+        <a href="https://www.linkedin.com/in/alejandro-de-luque-113530374/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-i18n="hero_cta_linkedin"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       </div>
+      <p class="hero-availability"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span data-i18n="hero_availability">Estudiante de ASIR · eJPTv2 · Disponible para prácticas FCT</span></p>
     </div>
 
     <div class="terminal">
@@ -2438,6 +2446,9 @@
         hero_subtitle: '<span class="highlight">Cybersecurity</span> & Arch Linux enjoyer',
         hero_cta_contact: "Contact Me",
         hero_cta_explore: "Explore Docs",
+        hero_cta_github: "View GitHub",
+        hero_cta_linkedin: "LinkedIn",
+        hero_availability: "ASIR student · eJPTv2 · Open to FCT internships",
         about_label: "About me",
         about_title: "About me",
         about_p1: "I'm <strong>Kyrox</strong>, a cybersecurity enthusiast focused on ethical hacking and offensive security. Currently pursuing a <strong>Higher Degree in ASIR</strong> (Network Computer Systems Administration) while expanding my knowledge in pentesting and forensics.",
@@ -2512,6 +2523,9 @@
         hero_subtitle: '<span class="highlight">Ciberseguridad</span> & Arch Linux enjoyer',
         hero_cta_contact: "Contactar",
         hero_cta_explore: "Explorar docs",
+        hero_cta_github: "Ver GitHub",
+        hero_cta_linkedin: "LinkedIn",
+        hero_availability: "Estudiante de ASIR · eJPTv2 · Disponible para prácticas FCT",
         about_label: "About me",
         about_title: "Sobre mí",
         about_p1: "Soy <strong>Kyrox</strong>, un apasionado de la ciberseguridad con enfoque en el hacking ético y la seguridad ofensiva. Actualmente cursando el <strong>Grado Superior de ASIR</strong> (Administración de Sistemas Informáticos en Red) mientras amplío mis conocimientos en pentesting y análisis forense.",
