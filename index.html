@@ -2451,9 +2451,9 @@
         hero_availability: "ASIR student · eJPTv2 · Open to FCT internships",
         about_label: "About me",
         about_title: "About me",
-        about_p1: "I'm <strong>Kyrox</strong>, a cybersecurity enthusiast focused on ethical hacking and offensive security. Currently pursuing a <strong>Higher Degree in ASIR</strong> (Network Computer Systems Administration) while expanding my knowledge in pentesting and forensics.",
-        about_p2: "Certified with the <strong>eJPT (eLearnSecurity Junior Penetration Tester)</strong>, an accreditation that validates my skills in reconnaissance, vulnerability exploitation, and post-exploitation in real environments.",
-        about_p3: "My goal is to master every layer of systems, from the network to the application, to understand and neutralize threats before they occur.",
+        about_p1: "I'm <strong>Kyrox</strong>, an ASIR student focused on systems, networking and cybersecurity. I build hands-on labs and personal projects to strengthen my skills in Linux, infrastructure and security testing.", 
+        about_p2: "I hold the <strong>eJPTv2</strong> certification and practise through authorized pentesting labs and documented writeups. I'm currently looking for an <strong>FCT internship</strong> where I can contribute, learn and grow in an IT team.",
+        about_p3: "My interests include Linux and Windows administration, networking, monitoring and security automation. I approach projects as learning labs and document what I build, the tools used and the lessons learned.",
         stat_cert: "eJPT Certification",
         stat_asir: "Higher Degree Student",
         stat_ctf: "Active Competitor",
@@ -2528,9 +2528,9 @@
         hero_availability: "Estudiante de ASIR · eJPTv2 · Disponible para prácticas FCT",
         about_label: "About me",
         about_title: "Sobre mí",
-        about_p1: "Soy <strong>Kyrox</strong>, un apasionado de la ciberseguridad con enfoque en el hacking ético y la seguridad ofensiva. Actualmente cursando el <strong>Grado Superior de ASIR</strong> (Administración de Sistemas Informáticos en Red) mientras amplío mis conocimientos en pentesting y análisis forense.",
-        about_p2: "Certificado con el <strong>eJPT (eLearnSecurity Junior Penetration Tester)</strong>, una acreditación que valida mis habilidades en reconocimiento, explotación de vulnerabilidades y post-explotación en entornos reales.",
-        about_p3: "Mi objetivo es dominar cada capa de los sistemas, desde la red hasta la aplicación, para comprender y neutralizar las amenazas antes de que ocurran.",
+        about_p1: "Soy <strong>Kyrox</strong>, estudiante de ASIR orientado a sistemas, redes y ciberseguridad. Desarrollo laboratorios y proyectos propios para reforzar mis conocimientos de Linux, infraestructura y pruebas de seguridad.",
+        about_p2: "Tengo la certificación <strong>eJPTv2</strong> y practico mediante laboratorios de pentesting autorizados y writeups documentados. Actualmente busco unas <strong>prácticas FCT</strong> donde aportar, aprender y crecer dentro de un equipo IT.",
+        about_p3: "Me interesan la administración de Linux y Windows, las redes, la monitorización y la automatización de seguridad. Trato mis proyectos como laboratorios de aprendizaje y documento lo construido, las herramientas y lo aprendido.",
         stat_cert: "Certificación eJPT",
         stat_asir: "Grado Superior cursando",
         stat_ctf: "Competidor activo",
@@ -2908,7 +2908,7 @@
     async function loadGitHubProjects() {
       const container = document.getElementById('github-projects');
       if (!container) return;
-      const pinnedOrder = ['SentinelOps', 'CiberSecurity-Pentesting', 'i4mk1r0x'];
+      const featuredRepos = ['SentinelOps', 'CiberSecurity-Pentesting', 'i4mk1r0x']; // Mantén esta lista sincronizada con los repos fijados en GitHub: la API REST pública no expone los pins del perfil.
       const excluded = new Set(['KyyroxxX', 'A-LEGENDARY-GIFT-AWAITS', 'KyyroxxX.github.io']);
       const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
       try {
@@ -2919,7 +2919,7 @@
         const repos = await response.json();
         const eligible = repos.filter(repo => !repo.fork && !repo.archived && !excluded.has(repo.name));
         eligible.sort((a, b) => {
-          const ai = pinnedOrder.indexOf(a.name), bi = pinnedOrder.indexOf(b.name);
+          const ai = featuredRepos.indexOf(a.name), bi = featuredRepos.indexOf(b.name);
           if (ai !== -1 || bi !== -1) return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
           return new Date(b.updated_at) - new Date(a.updated_at);
         });
