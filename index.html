@@ -3003,13 +3003,19 @@
           const description = projectDescriptions[repoKey] || repo.description || 'Repositorio público. Consulta el README para conocer su alcance y documentación.';
           const updated = new Date(repo.updated_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short' });
           const preview = projectImages[repoKey];
+          const projectUrl = repoKey === 'breakerxfixer/breakerxfixer.github.io'
+            ? 'https://breakerxfixer.online/'
+            : repo.html_url;
+          const projectLinkLabel = repoKey === 'breakerxfixer/breakerxfixer.github.io'
+            ? 'Visitar web ↗'
+            : 'Explorar repositorio ↗';
           return `<article class="project-card fade-in github-project">
             <div class="project-img github-project-img ${preview ? 'has-preview' : ''}">${preview ? `<img src="${preview}" alt="Vista previa de ${esc(repo.name)}" loading="lazy" onerror="this.parentElement.classList.remove('has-preview');this.remove();">` : ''}<span><i class="fa-brands fa-github"></i></span><small>OPEN SOURCE / GITHUB</small></div>
             <div class="project-info">
               <div class="project-title">${esc(repo.name)}${index < featured.length ? ' <span class="project-featured-badge">DESTACADO</span>' : ''} </div>
               <p class="project-desc">${esc(description)}</p>
               <div class="project-meta">${repo.language ? `<span><i class="fa-solid fa-code"></i> ${esc(repo.language)}</span>` : ''}<span><i class="fa-solid fa-star"></i> ${repo.stargazers_count}</span><span>Actualizado ${esc(updated)}</span></div>
-              <a href="${esc(repo.html_url)}" target="_blank" rel="noopener noreferrer" class="project-link">Explorar repositorio ↗</a>
+              <a href="${esc(projectUrl)}" target="_blank" rel="noopener noreferrer" class="project-link">${projectLinkLabel}</a>
             </div>
           </article>`;
         }).join('');
